@@ -4,7 +4,7 @@
 
 export async function fetchLiveJobs({ keywords, location, page = 1, resultsPerPage = 10 }) {
   const apiKey = import.meta.env.VITE_JOOBLE_API_KEY
-  if (!apiKey || apiKey === 'your-jooble-key-here') {
+if (true) {
     // Return mock data if no API key configured
     return getMockJobs(keywords, location)
   }
