@@ -109,10 +109,7 @@ export default function App() {
 
         {phase === 'results' && (
           <JobResults
-            scores={scores}
-            jobs={jobs}
-            role={role}
-            region={region}
+            results={scores}
             onSelectJob={handleSelectJob}
             onReset={() => setPhase('input')}
           />

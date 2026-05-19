@@ -38,16 +38,26 @@ AWS Solutions Architect Professional — Amazon Web Services
 Microsoft Azure Solutions Architect (AZ-305) — Microsoft
 PMP — Project Management Institute`
 
+const VSF_DIMS = [
+  ['Scale of Impact',       '25%'],
+  ['Complexity Governed',   '25%'],
+  ['Authority Held',        '20%'],
+  ['Outcome Integrity',     '20%'],
+  ['Capability Transferred','10%'],
+]
+
 export default function CVInput({ cvText, setCvText, role, setRole, region, setRegion, onRun, error }) {
-  const hasApiKey = import.meta.env.VITE_ANTHROPIC_API_KEY && import.meta.env.VITE_ANTHROPIC_API_KEY !== 'sk-ant-...'
+  const hasApiKey = import.meta.env.VITE_ANTHROPIC_API_KEY &&
+    import.meta.env.VITE_ANTHROPIC_API_KEY !== 'sk-ant-...'
 
   return (
     <div className="input-screen">
       <div className="input-hero">
-        <h1>Know exactly where you stand.</h1>
+        <div className="hero-eyebrow">Velocity Success Factor™</div>
+        <h1>Know exactly <span className="hero-gradient">where you stand.</span></h1>
         <p className="hero-sub">
-          Paste your CV or load a sample. Enter your target role. The engine pulls live jobs,
-          scores your fit across five dimensions, identifies your gaps, and builds your pathway forward.
+          Paste your CV and target role. The engine pulls live jobs, scores your fit across
+          five dimensions, identifies every gap, and builds your pathway forward.
         </p>
       </div>
 
@@ -66,62 +76,72 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
       <div className="input-grid">
         <div className="input-col-main">
           <div className="field">
-            <label htmlFor="cv-text">Your CV</label>
-            <p className="field-hint">Plain text. Copy from Word, PDF, or LinkedIn. The more detail the better.</p>
+            <div className="field-label-row">
+              <label htmlFor="cv-text">Your CV</label>
+              {!cvText && (
+                <button className="btn-ghost" onClick={() => setCvText(SAMPLE_CV)}>
+                  Load sample CV
+                </button>
+              )}
+            </div>
+            <p className="field-hint">Plain text — copy from Word, PDF, or LinkedIn. More detail = better scoring.</p>
             <textarea
               id="cv-text"
               className="cv-textarea"
               value={cvText}
               onChange={e => setCvText(e.target.value)}
               placeholder="Paste your CV here..."
-              rows={20}
+              rows={22}
             />
-            {!cvText && (
-              <button className="btn-ghost sample-btn" onClick={() => setCvText(SAMPLE_CV)}>
-                Load sample CV
-              </button>
-            )}
           </div>
         </div>
 
         <div className="input-col-side">
-          <div className="field">
-            <label htmlFor="role">Target Role</label>
-            <p className="field-hint">Job title to search live market</p>
-            <input id="role" type="text" className="input" value={role}
-              onChange={e => setRole(e.target.value)} placeholder="e.g. Enterprise Architect" />
-          </div>
+          <div className="side-card">
+            <div className="field">
+              <label htmlFor="role">Target Role</label>
+              <p className="field-hint">Job title to search the live market</p>
+              <input
+                id="role"
+                type="text"
+                className="input"
+                value={role}
+                onChange={e => setRole(e.target.value)}
+                placeholder="e.g. Enterprise Architect"
+              />
+            </div>
 
-          <div className="field">
-            <label htmlFor="region">Region</label>
-            <p className="field-hint">City, state, or country</p>
-            <input id="region" type="text" className="input" value={region}
-              onChange={e => setRegion(e.target.value)} placeholder="e.g. Brisbane, Australia" />
-          </div>
+            <div className="field">
+              <label htmlFor="region">Region</label>
+              <p className="field-hint">City, state, or country</p>
+              <input
+                id="region"
+                type="text"
+                className="input"
+                value={region}
+                onChange={e => setRegion(e.target.value)}
+                placeholder="e.g. Brisbane, Australia"
+              />
+            </div>
 
-          <div className="vsf-explainer">
-            <h3>The Five VSF Dimensions</h3>
-            {[
-              ['Scale of Impact', '25%', 'How far did your work reach?'],
-              ['Complexity Governed', '25%', 'How hard was the environment?'],
-              ['Authority Held', '20%', 'What level did you actually operate at?'],
-              ['Outcome Integrity', '20%', 'Did the work land?'],
-              ['Capability Transferred', '10%', 'What did you leave behind?'],
-            ].map(([name, weight, desc]) => (
-              <div key={name} className="dim-row">
-                <div className="dim-header">
+            <div className="vsf-explainer">
+              <h3>Five VSF Dimensions</h3>
+              {VSF_DIMS.map(([name, weight]) => (
+                <div key={name} className="dim-row">
                   <span className="dim-name">{name}</span>
                   <span className="dim-weight">{weight}</span>
                 </div>
-                <p className="dim-desc">{desc}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <button className="btn-primary run-btn" onClick={onRun}
-            disabled={!cvText.trim() || !role.trim()}>
-            Run VSF Match
-          </button>
+            <button
+              className="btn-primary run-btn"
+              onClick={onRun}
+              disabled={!cvText.trim() || !role.trim()}
+            >
+              Run VSF Match →
+            </button>
+          </div>
         </div>
       </div>
     </div>
