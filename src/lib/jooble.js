@@ -4,13 +4,14 @@
 
 export async function fetchLiveJobs({ keywords, location, page = 1, resultsPerPage = 10 }) {
   const apiKey = import.meta.env.VITE_JOOBLE_API_KEY
-if (true) {
+
+  if (!apiKey || apiKey === 'your_jooble_key_here') {
     // Return mock data if no API key configured
     return getMockJobs(keywords, location)
   }
 
   try {
-    const response = await fetch(`/jooble-api/${apiKey}`, {
+    const response = await fetch(`https://jooble.org/api/${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
