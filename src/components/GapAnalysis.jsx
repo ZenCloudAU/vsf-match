@@ -5,26 +5,78 @@ import { getBand } from '../lib/vsf-scorer.js'
 const PRIORITY_COLOURS = { HIGH: '#a13544', MEDIUM: '#d19900', LOW: '#437a22' }
 const APPLY_COLOURS = { 'STRONG YES': '#f97316', 'YES': '#ea580c', 'BORDERLINE': '#d19900', 'NO': '#a13544' }
 
+function downloadMarkdown(score, rankedGaps) {
+  const band = getBand(score.overallScore)
+  const date = new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+
+  const dimLabels = {
+    scaleOfImpact: 'Scale of Impact',
+    complexityGoverned: 'Complexity Governed',
+    authorityHeld: 'Authority Held',
+    outcomeIntegrity: 'Outcome Integrity',
+    capabilityTransferred: 'Capability Transferred'
+  }
+
+  let md = `# VSF Match Report\n`
+  md += `**${score.jobTitle}** — ${score.company}\n`
+  md += `*Generated ${date}*\n\n`
+  md += `---\n\n`
+  md += `## Overall Score: ${score.overallScore}/10 — ${band.label}\n`
+  md += `**Apply Recommendation:** ${score.applyRecommendation}\n`
+  md += `${score.applyRationale}\n\n`
+  md += `---\n\n`
+  md += `## VSF Dimension Scores\n\n`
+
+  Object.entries(score.dimensions || {}).forEach(([key, dim]) => {
+    md += `### ${dimLabels[key] || key} — ${dim.score}/10 (${Math.round(dim.weight * 100)}%)\n`
+    md += `${dim.evidence}\n\n`
+  })
+
+  md += `---\n\n`
+  md += `## Genuine Strengths\n\n`
+  ;(score.strengths || []).forEach(s => { md += `- ${s}\n` })
+
+  if (rankedGaps.length > 0) {
+    md += `\n---\n\n`
+    md += `## Gaps to Bridge\n\n`
+    rankedGaps.forEach(gap => {
+      md += `### ${gap.skill} — ${gap.priority} priority (${gap.weeksToBridge} weeks)\n`
+      md += `**JD requires:** "${gap.jdEvidence}"\n\n`
+    })
+  }
+
+  md += `\n---\n`
+  md += `*VSF Match · ZenCloud Global Consultants · Velocity Success Factor™*\n`
+
+  const blob = new Blob([md], { type: 'text/markdown' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `VSF-Report-${score.jobTitle.replace(/\s+/g, '-')}-${score.company.replace(/\s+/g, '-')}.md`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }) {
   const band = getBand(score.overallScore)
   const rankedGaps = rankGaps(score.gaps || [])
 
   return (
     <div className="gap-screen">
-      <button className="btn-back" onClick={onBack}>← Back to Results</button>
+      <div className="gap-nav">
+        <button className="btn-back" onClick={onBack}>← Back to Results</button>
+        <button className="btn-secondary btn-download" onClick={() => downloadMarkdown(score, rankedGaps)}>
+          ↓ Download Report
+        </button>
+      </div>
 
       <div className="gap-hero">
         <div>
           <h2>{score.jobTitle}</h2>
           <p className="gap-company">{score.company}</p>
           {score.sourceUrl && score.sourceUrl !== '#' && (
-            <a
-              className="job-live-link"
-              href={score.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ marginTop: '8px', display: 'inline-block' }}
-            >
+            <a className="job-live-link" href={score.sourceUrl} target="_blank" rel="noopener noreferrer"
+              style={{ marginTop: '8px', display: 'inline-block' }}>
               Open original job posting ↗
             </a>
           )}

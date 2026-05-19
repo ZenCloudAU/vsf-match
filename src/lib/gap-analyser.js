@@ -1,58 +1,76 @@
-// Gap Analysis and Learning Path Generator
+// Gap Analyser — generates ranked gaps and learning paths via Claude
 import { callClaude } from './claude.js'
 
-const GAP_SYSTEM_PROMPT = `You are a senior EA career coach operating within the Velocity Architecture Framework™ by ZenCloud Global Consultants.
+export function rankGaps(gaps) {
+  const priority = { HIGH: 0, MEDIUM: 1, LOW: 2 }
+  return [...gaps].sort((a, b) => {
+    const pd = (priority[a.priority] ?? 3) - (priority[b.priority] ?? 3)
+    if (pd !== 0) return pd
+    return (b.weeksToBridge || 0) - (a.weeksToBridge || 0)
+  })
+}
 
-Your role is to generate a precise, senior-level learning path for a specific skill gap.
-The learner is a senior practitioner — 15+ years experience. Do NOT give beginner content.
-Bridge from what they know to what they need. Make it specific and actionable.
+function cleanJson(raw) {
+  // Extract the outermost JSON object
+  const start = raw.indexOf('{')
+  const end = raw.lastIndexOf('}')
+  if (start === -1 || end === -1) throw new Error('No JSON object found in response')
+  let str = raw.slice(start, end + 1)
 
-Return ONLY valid JSON.`
+  // Remove control characters that break JSON parsing
+  str = str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+
+  // Escape unescaped newlines inside string values
+  str = str.replace(/"([^"\\]*(?:\\.[^"\\]*)*)"/gs, (match) => {
+    return match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')
+  })
+
+  return str
+}
+
+const LEARNING_SYSTEM = `You are a senior career pathway architect for enterprise architects.
+Generate a practical learning path to close a specific skill gap.
+Return ONLY valid JSON. Use short strings — avoid any unescaped quotes, newlines, or special characters inside JSON string values.`
 
 export async function generateLearningPath(gap, cvText, targetRole) {
-  const userMessage = `Generate a learning path for this specific gap for a senior EA/SA practitioner.
+  const prompt = `Generate a learning path to close this gap for an enterprise architect targeting: ${targetRole}
 
 GAP: ${gap.skill}
 PRIORITY: ${gap.priority}
-JD REQUIRES: ${gap.jdEvidence}
-CURRENT CV SHOWS: ${gap.cvEvidence}
-TARGET ROLE: ${targetRole}
 WEEKS TO BRIDGE: ${gap.weeksToBridge}
+JD EVIDENCE: ${gap.jdEvidence}
+CV CONTEXT: ${cvText.substring(0, 800)}
 
-The practitioner has 30 years experience in enterprise and solution architecture, cloud transformation, and global operations delivery.
-
-Return JSON:
+Return JSON in exactly this structure:
 {
-  "gap": "${gap.skill}",
-  "weeksToBridge": ${gap.weeksToBridge},
-  "bridgeStrategy": "One sentence — how to approach this gap given their existing experience",
+  "gap": "Gap name",
+  "weeksToBridge": 4,
+  "bridgeStrategy": "One sentence strategy",
   "weeks": [
     {
       "week": 1,
-      "focus": "Week focus title",
+      "focus": "Week theme",
       "dailyCommitment": "45 mins",
       "activities": [
-        { "type": "READ|WATCH|PRACTICE|BUILD", "title": "Activity title", "resource": "Specific resource or URL", "duration": "30 mins" }
+        { "type": "READ", "title": "Resource title", "duration": "2h" },
+        { "type": "WATCH", "title": "Video title", "duration": "1h" },
+        { "type": "PRACTICE", "title": "Exercise", "duration": "3h" }
       ],
-      "milestone": "What they can demonstrate by end of week"
+      "milestone": "What you can do by end of week"
     }
   ],
-  "audioBriefScript": "A 500-word podcast script that explains this topic at senior EA level — suitable for NotebookLM or ElevenLabs. Conversational, dense, no padding.",
-  "cvLanguage": "Rewrite suggestion — how to phrase this capability on a CV once acquired"
+  "cvLanguage": "One sentence to add to CV once skill is acquired",
+  "audioBriefScript": "Short 3 sentence audio brief about this topic"
 }`
 
-  const result = await callClaude(GAP_SYSTEM_PROMPT, userMessage, 3000)
+  const raw = await callClaude(LEARNING_SYSTEM, prompt, 2000)
 
   try {
-    return JSON.parse(result)
-  } catch {
-    const jsonMatch = result.match(/\{[\s\S]*\}/)
-    if (jsonMatch) return JSON.parse(jsonMatch[0])
-    throw new Error('Failed to parse learning path response')
+    const cleaned = cleanJson(raw)
+    return JSON.parse(cleaned)
+  } catch (err) {
+    console.error('Learning path parse error:', err.message)
+    console.error('Raw response (first 500):', raw.substring(0, 500))
+    throw new Error(`Failed to parse learning path: ${err.message}`)
   }
-}
-
-export function rankGaps(gaps) {
-  const priorityOrder = { HIGH: 0, MEDIUM: 1, LOW: 2 }
-  return [...gaps].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
 }

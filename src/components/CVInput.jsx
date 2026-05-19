@@ -2,7 +2,7 @@ import React from 'react'
 
 const SAMPLE_CV = `Alex Morgan — Enterprise Architect
 Melbourne, VIC, Australia
-TOGAF 9.2 Certified · AWS Solutions Architect Professional · PMP
+TOGAF 9.2 Certified · AWS Solutions Architect Professional · AZ-305 · PMP
 
 SUMMARY
 Enterprise Architect with 12 years across financial services, government, and technology sectors.
@@ -53,7 +53,7 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
 
       {!hasApiKey && (
         <div className="alert alert-warning">
-          <strong>API key required.</strong> Add your Anthropic API key to <code>.env</code> to enable scoring. See README for setup instructions.
+          <strong>API key required.</strong> Add your Anthropic API key to <code>.env</code> to enable scoring.
         </div>
       )}
 
@@ -88,27 +88,15 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
           <div className="field">
             <label htmlFor="role">Target Role</label>
             <p className="field-hint">Job title to search live market</p>
-            <input
-              id="role"
-              type="text"
-              className="input"
-              value={role}
-              onChange={e => setRole(e.target.value)}
-              placeholder="e.g. Enterprise Architect"
-            />
+            <input id="role" type="text" className="input" value={role}
+              onChange={e => setRole(e.target.value)} placeholder="e.g. Enterprise Architect" />
           </div>
 
           <div className="field">
             <label htmlFor="region">Region</label>
             <p className="field-hint">City, state, or country</p>
-            <input
-              id="region"
-              type="text"
-              className="input"
-              value={region}
-              onChange={e => setRegion(e.target.value)}
-              placeholder="e.g. Brisbane, Australia"
-            />
+            <input id="region" type="text" className="input" value={region}
+              onChange={e => setRegion(e.target.value)} placeholder="e.g. Brisbane, Australia" />
           </div>
 
           <div className="vsf-explainer">
@@ -130,11 +118,8 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
             ))}
           </div>
 
-          <button
-            className="btn-primary run-btn"
-            onClick={onRun}
-            disabled={!cvText.trim() || !role.trim()}
-          >
+          <button className="btn-primary run-btn" onClick={onRun}
+            disabled={!cvText.trim() || !role.trim()}>
             Run VSF Match
           </button>
         </div>

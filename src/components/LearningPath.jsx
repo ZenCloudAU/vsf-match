@@ -8,6 +8,9 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
   const [showScript, setShowScript] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+    setError(null)
+    setPath(null)
     generateLearningPath(gap, cvText, targetRole)
       .then(setPath)
       .catch(err => setError(err.message))
@@ -15,6 +18,37 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
   }, [gap, cvText, targetRole])
 
   const TYPE_ICONS = { READ: '📖', WATCH: '▶', PRACTICE: '⚡', BUILD: '🔨' }
+
+  function downloadPlan(path) {
+    const date = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
+    let md = `# Learning Pathway: ${path.gap}\n`
+    md += `**Target Role:** ${targetRole}\n`
+    md += `**Duration:** ${path.weeksToBridge} weeks\n`
+    md += `*Generated ${date} · VSF Match · ZenCloud Global Consultants*\n\n`
+    md += `---\n\n`
+    md += `## Bridge Strategy\n${path.bridgeStrategy}\n\n`
+    md += `---\n\n`
+    ;(path.weeks || []).forEach(week => {
+      md += `## Week ${week.week}: ${week.focus}\n`
+      md += `*Daily commitment: ${week.dailyCommitment}*\n\n`
+      ;(week.activities || []).forEach(act => {
+        md += `- **${act.type}** ${act.title} _(${act.duration})_\n`
+      })
+      md += `\n**Milestone:** ${week.milestone}\n\n`
+    })
+    if (path.cvLanguage) {
+      md += `---\n\n## CV Language — Once Acquired\n> "${path.cvLanguage}"\n\n`
+    }
+    md += `---\n*Velocity Success Factor™ · ZenCloud Global Consultants*\n`
+
+    const blob = new Blob([md], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `Learning-Path-${path.gap.replace(/\s+/g, '-').substring(0, 40)}.md`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
 
   if (loading) return (
     <div className="learning-loading">
@@ -27,13 +61,23 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
   if (error) return (
     <div className="error-screen">
       <p>Failed to generate learning path: {error}</p>
-      <button className="btn-back" onClick={onBack}>← Back</button>
+      <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '16px' }}>
+        <button className="btn-back" onClick={onBack}>← Back to Gap Analysis</button>
+        <button className="btn-primary" onClick={onReset}>New Search</button>
+      </div>
     </div>
   )
 
   return (
     <div className="learning-screen">
-      <button className="btn-back" onClick={onBack}>← Back to Gap Analysis</button>
+      <div className="gap-nav">
+        <button className="btn-back" onClick={onBack}>← Back to Gap Analysis</button>
+        {path && (
+          <button className="btn-secondary btn-download" onClick={() => downloadPlan(path)}>
+            ↓ Download Plan
+          </button>
+        )}
+      </div>
 
       <div className="learning-hero">
         <h2>{path.gap}</h2>
