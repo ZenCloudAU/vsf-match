@@ -75,8 +75,13 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
           <h2>{score.jobTitle}</h2>
           <p className="gap-company">{score.company}</p>
           {score.sourceUrl && score.sourceUrl !== '#' && (
-            <a className="job-live-link" href={score.sourceUrl} target="_blank" rel="noopener noreferrer"
-              style={{ marginTop: '8px', display: 'inline-block' }}>
+            <a
+              className="job-live-link"
+              href={score.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginTop: '8px', display: 'inline-block' }}
+            >
               Open original job posting ↗
             </a>
           )}
