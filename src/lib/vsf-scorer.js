@@ -23,12 +23,14 @@ SCORING RULES:
 
 BENCHMARK BANDS:
 3.0–4.5: Graduate / Junior EA
-4.5–6.0: Mid-level Solution Architect  
+4.5–6.0: Mid-level Solution Architect
 6.0–7.5: Senior Solution Architect
 7.5–8.5: Principal / Lead EA
 8.5–10.0: Chief Architect`
 
 export async function scoreCV(cvText, job) {
+  const sourceUrl = job.link || job.url || job.sourceUrl || job.redirect_url || null
+
   const userMessage = `Score this CV against the following job description using the VSF five-dimension framework.
 
 JOB TITLE: ${job.title}
@@ -44,6 +46,7 @@ Return JSON in exactly this structure:
   "jobId": "${job.id}",
   "jobTitle": "${job.title}",
   "company": "${job.company}",
+  "sourceUrl": ${sourceUrl ? `"${sourceUrl}"` : 'null'},
   "overallScore": 0.0,
   "band": "Senior Solution Architect",
   "matchStrength": "STRONG|MODERATE|WEAK",
@@ -71,10 +74,14 @@ Return JSON in exactly this structure:
   const result = await callClaude(VSF_SYSTEM_PROMPT, userMessage, 2048)
 
   try {
-    return JSON.parse(result)
+    const parsed = JSON.parse(result)
+    return { ...parsed, sourceUrl: parsed.sourceUrl || sourceUrl }
   } catch {
     const jsonMatch = result.match(/\{[\s\S]*\}/)
-    if (jsonMatch) return JSON.parse(jsonMatch[0])
+    if (jsonMatch) {
+      const parsed = JSON.parse(jsonMatch[0])
+      return { ...parsed, sourceUrl: parsed.sourceUrl || sourceUrl }
+    }
     throw new Error('Failed to parse VSF score response')
   }
 }
