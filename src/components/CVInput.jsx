@@ -1,19 +1,42 @@
 import React from 'react'
 
-const SAMPLE_CV = `Phil Myint — Enterprise & Solution Architect
-ZenCloud Global Consultants · Brisbane, Australia
-TOGAF Certified · CBA Certified · AZ-305 Renewed 92% (March 2026)
+const SAMPLE_CV = `Alex Morgan — Enterprise Architect
+Melbourne, VIC, Australia
+TOGAF 9.2 Certified · AWS Solutions Architect Professional · PMP
+
+SUMMARY
+Enterprise Architect with 12 years across financial services, government, and technology sectors.
+Proven track record delivering large-scale transformation programmes, cloud migration strategies,
+and enterprise-wide governance frameworks. Experienced operating at executive and board level.
 
 EXPERIENCE
 
-Principal Architect / Delivery Lead — Global Operations (2020–2024)
-Led enterprise architecture across 14 data centres on four continents. Zero-disruption migration of 2.3M+ customer records across M&A integration. Chaired Architecture Review Board. Presented architecture position to C-suite and board-level stakeholders. Delivered $35M programme on time and within governance constraints.
+Enterprise Architect — Financial Services (2019–2024)
+Commonwealth Bank of Australia · Sydney, NSW
+Led cloud-first architecture strategy across 6 business units impacting 4.2M retail customers.
+Chaired Architecture Review Board with sign-off authority on $28M technology investment portfolio.
+Delivered zero-disruption core banking migration for 1.8M accounts. Produced 22 TOGAF-aligned
+architecture artefacts. Established Design Authority and uplifted team of 14 solution architects.
+Presented quarterly architecture position to CTO and board technology committee.
 
-Enterprise Architect — Financial Services (2018–2020)
-Defined target state architecture for core banking transformation. Established Design Authority. Produced 18 EA artefacts aligned to ISO 42010. Resolved institutional paralysis engagement — three failed predecessor programmes.
+Solution Architect — Government Digital Transformation (2016–2019)
+Services Australia · Canberra, ACT
+Designed cloud migration architecture for three high-volume citizen-facing services (2.1M users).
+Azure and AWS hybrid architecture. Security architecture aligned to ISM and Essential Eight.
+Delivered $12M programme on time and 8% under budget. Coordinated across six agency stakeholders.
 
-Solution Architect — Government / Infrastructure (2015–2018)
-Cloud migration strategy for QLD government services. Azure architecture design. Security architecture aligned to Essential Eight.`
+Senior Systems Architect — Infrastructure (2012–2016)
+Telstra · Melbourne, VIC
+Architecture design for national network modernisation programme across 11 states and territories.
+Multi-vendor coordination across Cisco, HPE, and Ericsson. Resolved two failed predecessor engagements.
+Introduced architecture pattern library adopted by 40+ engineers across the business.
+
+EDUCATION & CERTIFICATIONS
+Bachelor of Computer Science — University of Melbourne (2011)
+TOGAF 9.2 Certified — The Open Group
+AWS Solutions Architect Professional — Amazon Web Services
+Microsoft Azure Solutions Architect (AZ-305) — Microsoft
+PMP — Project Management Institute`
 
 export default function CVInput({ cvText, setCvText, role, setRole, region, setRegion, onRun, error }) {
   const hasApiKey = import.meta.env.VITE_ANTHROPIC_API_KEY && import.meta.env.VITE_ANTHROPIC_API_KEY !== 'sk-ant-...'
@@ -21,8 +44,11 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
   return (
     <div className="input-screen">
       <div className="input-hero">
-        <h1>Know exactly where you stand.<br/>Every Monday.</h1>
-        <p className="hero-sub">Paste your CV. Enter your target role. The engine pulls live jobs, scores your match across five dimensions, identifies your gaps, and builds your learning path.</p>
+        <h1>Know exactly where you stand.</h1>
+        <p className="hero-sub">
+          Paste your CV or load a sample. Enter your target role. The engine pulls live jobs,
+          scores your fit across five dimensions, identifies your gaps, and builds your pathway forward.
+        </p>
       </div>
 
       {!hasApiKey && (

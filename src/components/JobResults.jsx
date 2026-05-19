@@ -1,11 +1,23 @@
 import React from 'react'
 import { getBand } from '../lib/vsf-scorer.js'
 
-const MATCH_COLOURS = { 'STRONG': '#437a22', 'MODERATE': '#d19900', 'WEAK': '#a12c7b' }
-const APPLY_COLOURS = { 'STRONG YES': '#437a22', 'YES': '#01696f', 'BORDERLINE': '#d19900', 'NO': '#a13544' }
+const MATCH_COLOURS = { 'STRONG': '#f97316', 'MODERATE': '#d19900', 'WEAK': '#a13544' }
+const APPLY_COLOURS = { 'STRONG YES': '#f97316', 'YES': '#ea580c', 'BORDERLINE': '#d19900', 'NO': '#a13544' }
 
 export default function JobResults({ scores, jobs, role, region, onSelectJob, onReset }) {
   const sorted = [...scores].sort((a, b) => parseFloat(b.overallScore) - parseFloat(a.overallScore))
+
+  // Merge source URL from jobs array into each score
+  const withLinks = sorted.map(score => {
+    const matched = jobs.find(j =>
+      (j.title === score.jobTitle || j.title?.includes(score.jobTitle)) &&
+      (j.company === score.company)
+    )
+    return {
+      ...score,
+      sourceUrl: score.sourceUrl || matched?.link || matched?.url || matched?.jobUrl || matched?.redirect_url || null
+    }
+  })
 
   return (
     <div className="results-screen">
@@ -13,7 +25,9 @@ export default function JobResults({ scores, jobs, role, region, onSelectJob, on
         <button className="btn-back" onClick={onReset}>← New Search</button>
         <div>
           <h2>Live Market: {role}</h2>
-          <p className="results-meta">{region} · {scores.length} roles scored · {new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+          <p className="results-meta">
+            {region} · {scores.length} roles scored · {new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' })}
+          </p>
         </div>
       </div>
 
@@ -37,7 +51,7 @@ export default function JobResults({ scores, jobs, role, region, onSelectJob, on
       </div>
 
       <div className="job-cards">
-        {sorted.map((score, i) => {
+        {withLinks.map((score, i) => {
           const band = getBand(score.overallScore)
           return (
             <div key={score.jobId || i} className="job-card" onClick={() => onSelectJob(score)}>
@@ -45,6 +59,17 @@ export default function JobResults({ scores, jobs, role, region, onSelectJob, on
                 <div>
                   <h3 className="job-title">{score.jobTitle}</h3>
                   <p className="job-company">{score.company}</p>
+                  {score.sourceUrl && score.sourceUrl !== '#' && (
+                    <a
+                      className="job-live-link"
+                      href={score.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      View live job ↗
+                    </a>
+                  )}
                 </div>
                 <div className="score-badge" style={{ borderColor: band.color, color: band.color }}>
                   {score.overallScore}
@@ -63,10 +88,10 @@ export default function JobResults({ scores, jobs, role, region, onSelectJob, on
               </div>
 
               <div className="job-card-footer">
-                <span className="match-tag" style={{ color: MATCH_COLOURS[score.matchStrength] || '#7a7974' }}>
+                <span className="match-tag" style={{ color: MATCH_COLOURS[score.matchStrength] || '#666' }}>
                   ● {score.matchStrength}
                 </span>
-                <span className="apply-tag" style={{ background: APPLY_COLOURS[score.applyRecommendation] || '#7a7974' }}>
+                <span className="apply-tag" style={{ background: APPLY_COLOURS[score.applyRecommendation] || '#666' }}>
                   {score.applyRecommendation}
                 </span>
                 <span className="gap-count">{score.gaps?.length || 0} gaps · click to analyse →</span>

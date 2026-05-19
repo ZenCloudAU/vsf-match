@@ -3,6 +3,7 @@ import { rankGaps } from '../lib/gap-analyser.js'
 import { getBand } from '../lib/vsf-scorer.js'
 
 const PRIORITY_COLOURS = { HIGH: '#a13544', MEDIUM: '#d19900', LOW: '#437a22' }
+const APPLY_COLOURS = { 'STRONG YES': '#f97316', 'YES': '#ea580c', 'BORDERLINE': '#d19900', 'NO': '#a13544' }
 
 export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }) {
   const band = getBand(score.overallScore)
@@ -16,6 +17,17 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
         <div>
           <h2>{score.jobTitle}</h2>
           <p className="gap-company">{score.company}</p>
+          {score.sourceUrl && score.sourceUrl !== '#' && (
+            <a
+              className="job-live-link"
+              href={score.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginTop: '8px', display: 'inline-block' }}
+            >
+              Open original job posting ↗
+            </a>
+          )}
         </div>
         <div className="score-hero-badge" style={{ color: band.color }}>
           <span className="score-hero-num">{score.overallScore}</span>
@@ -77,8 +89,8 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
         </div>
       )}
 
-      <div className="apply-block" style={{ borderColor: score.applyRecommendation?.includes('YES') ? '#437a22' : '#a13544' }}>
-        <strong>{score.applyRecommendation}</strong>
+      <div className="apply-block" style={{ borderColor: APPLY_COLOURS[score.applyRecommendation] || '#d19900' }}>
+        <strong style={{ color: APPLY_COLOURS[score.applyRecommendation] || '#d19900' }}>{score.applyRecommendation}</strong>
         <p>{score.applyRationale}</p>
       </div>
     </div>
