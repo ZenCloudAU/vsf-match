@@ -2,8 +2,8 @@ import React from 'react'
 import { rankGaps } from '../lib/gap-analyser.js'
 import { getBand } from '../lib/vsf-scorer.js'
 
-const PRIORITY_COLOURS = { HIGH: '#a13544', MEDIUM: '#d19900', LOW: '#437a22' }
-const APPLY_COLOURS = { 'STRONG YES': '#f97316', 'YES': '#ea580c', 'BORDERLINE': '#d19900', 'NO': '#a13544' }
+const PRIORITY_COLOURS = { HIGH: '#DC2626', MEDIUM: '#D97706', LOW: '#16A34A' }
+const APPLY_COLOURS = { 'STRONG YES': '#E8630A', 'YES': '#C24F06', 'BORDERLINE': '#D97706', 'NO': '#DC2626' }
 
 function downloadMarkdown(score, rankedGaps) {
   const band = getBand(score.overallScore)

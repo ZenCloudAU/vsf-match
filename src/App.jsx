@@ -6,6 +6,35 @@ import LearningPath from './components/LearningPath.jsx'
 import { fetchLiveJobs } from './lib/jooble.js'
 import { scoreCV } from './lib/vsf-scorer.js'
 
+const PHASE_STEPS = ['input', 'results', 'gap', 'learning']
+const PHASE_LABELS = ['Input', 'Results', 'Gap Analysis', 'Learning Path']
+
+function PhaseBar({ phase }) {
+  const currentIdx =
+    phase === 'scanning' ? 1
+    : phase === 'input'    ? 0
+    : phase === 'results'  ? 1
+    : phase === 'gap'      ? 2
+    : phase === 'learning' ? 3
+    : 0
+
+  return (
+    <div className="phase-bar">
+      {PHASE_STEPS.map((step, i) => (
+        <React.Fragment key={step}>
+          <div className={`phase-step${i < currentIdx ? ' done' : ''}${i === currentIdx ? ' current' : ''}`}>
+            <span className="phase-dot">{i + 1}</span>
+            <span className="phase-label">{PHASE_LABELS[i]}</span>
+          </div>
+          {i < PHASE_STEPS.length - 1 && (
+            <div className={`phase-line${i < currentIdx ? ' done' : ''}`} />
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
+
 export default function App() {
   const [phase, setPhase] = useState('input') // input | scanning | results | gap | learning
   const [cvText, setCvText] = useState('')
@@ -63,8 +92,8 @@ export default function App() {
       <header className="app-header">
         <div className="header-inner">
           <div className="logo-block">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="VSF Match logo">
-              <rect x="2" y="2" width="28" height="28" rx="6" fill="var(--color-primary)"/>
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="VSF Match logo">
+              <rect x="2" y="2" width="28" height="28" rx="2" fill="var(--color-primary)"/>
               <path d="M8 20 L12 12 L16 18 L20 10 L24 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
               <circle cx="24" cy="16" r="2.5" fill="white"/>
             </svg>
@@ -82,6 +111,8 @@ export default function App() {
       </header>
 
       <main className="main">
+        <PhaseBar phase={phase} />
+
         {phase === 'input' && (
           <CVInput
             cvText={cvText} setCvText={setCvText}
