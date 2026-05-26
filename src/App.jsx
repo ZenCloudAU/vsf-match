@@ -56,18 +56,33 @@ export default function App() {
 
     try {
       const liveJobs = await fetchLiveJobs({ keywords: role, location: region, resultsPerPage: 5 })
+
+      if (!liveJobs || liveJobs.length === 0) {
+        setError('No jobs found for that role and region. Try a broader search term.')
+        setPhase('input')
+        return
+      }
+
       setJobs(liveJobs)
       setProgress({ current: 0, total: liveJobs.length, label: 'Scoring your CV against live roles...' })
 
       const results = []
+      let lastError = null
       for (let i = 0; i < liveJobs.length; i++) {
         setProgress({ current: i + 1, total: liveJobs.length, label: `Scoring: ${liveJobs[i].title} @ ${liveJobs[i].company}` })
         try {
           const score = await scoreCV(cvText, liveJobs[i])
           results.push(score)
         } catch (err) {
+          lastError = err.message
           console.warn(`Scoring failed for ${liveJobs[i].title}:`, err.message)
         }
+      }
+
+      if (results.length === 0) {
+        setError(lastError || 'Scoring failed for all roles. Check that your Anthropic API key is configured correctly.')
+        setPhase('input')
+        return
       }
 
       setScores(results)

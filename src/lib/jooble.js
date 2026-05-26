@@ -24,7 +24,12 @@ export async function fetchLiveJobs({ keywords, location, page = 1, resultsPerPa
 
     if (!response.ok) throw new Error(`Jooble API error: ${response.status}`)
     const data = await response.json()
-    return data.jobs || []
+    const jobs = Array.isArray(data.jobs) && data.jobs.length > 0 ? data.jobs : null
+    if (!jobs) {
+      console.warn('Jooble returned 0 results, using mock data')
+      return getMockJobs(keywords, location)
+    }
+    return jobs
   } catch (error) {
     console.warn('Jooble API unavailable, using mock data:', error.message)
     return getMockJobs(keywords, location)
