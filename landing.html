@@ -537,11 +537,269 @@
     }
     .footer-bottom p { color: #334155; }
 
+    /* ── Start Here trail ───────────────────────── */
+    .section-trail {
+      background: linear-gradient(180deg, #FFF7ED 0%, var(--bg) 100%);
+      border-bottom: 1px solid #FED7AA;
+      padding: 3.5rem 2rem;
+    }
+    .trail-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .trail-skip {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+    }
+    .trail-skip:hover { color: var(--accent); }
+    .trail-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      counter-reset: trail-counter;
+    }
+    .trail-step {
+      background: var(--white);
+      border: 1px solid #FED7AA;
+      border-radius: 10px;
+      padding: 1.25rem 1.375rem;
+      position: relative;
+      counter-increment: trail-counter;
+    }
+    .trail-step::before {
+      content: counter(trail-counter);
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .trail-step h4 { font-size: 0.9375rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .trail-step p  { font-size: 0.8375rem; margin: 0; }
+    .trail-step a  { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .trail-step a:hover { text-decoration: underline; }
+    .trail-step.cta { border-color: var(--accent); background: rgba(232,99,10,0.04); }
+
+    /* ── What is EA ──────────────────────────────── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      border-top: 3px solid var(--accent);
+    }
+    .problem-num {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .problem-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .problem-card p  { font-size: 0.9rem; }
+    .ea-explainer {
+      max-width: 760px;
+      margin-top: 1.5rem;
+    }
+    .ea-explainer p { font-size: 1.0625rem; margin-bottom: 1.125rem; }
+    .ea-explainer p:last-child { margin-bottom: 0; }
+    .callout-box {
+      background: rgba(232,99,10,0.06);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .callout-box p { font-size: 1rem; font-style: italic; color: var(--text); font-weight: 500; margin: 0; }
+
+    /* ── VAF Core ────────────────────────────────── */
+    .decision-first-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 2rem 0 2.5rem;
+    }
+    .df-col {
+      padding: 1.5rem;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .df-col.old {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+    }
+    .df-col.new {
+      background: rgba(232,99,10,0.06);
+      border: 1px solid rgba(232,99,10,0.25);
+    }
+    .df-col-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .df-col.old .df-col-label { color: var(--muted); }
+    .df-col.new .df-col-label { color: var(--accent); }
+    .df-col h4 { font-size: 1.0625rem; font-weight: 700; }
+    .df-col.old h4 { color: var(--muted); }
+    .df-col.new h4 { color: var(--text); }
+    .df-col p { font-size: 0.9375rem; }
+    .viewpoints-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 0;
+    }
+    .vp-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.375rem;
+    }
+    .vp-num {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 0.375rem;
+    }
+    .vp-card h4 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.375rem; }
+    .vp-card p  { font-size: 0.85rem; }
+    .vp-card .vp-output {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--faint);
+    }
+
+    /* ── TOGAF compare ───────────────────────────── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2.5rem;
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      font-size: 0.9375rem;
+    }
+    .compare-table th {
+      padding: 0.875rem 1.25rem;
+      text-align: left;
+      font-size: 0.8125rem;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+      background: var(--bg-alt);
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th:first-child { color: var(--text); }
+    .compare-table th.vaf-col { color: var(--accent); }
+    .compare-table td {
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--muted);
+    }
+    .compare-table td:first-child { font-weight: 600; color: var(--text); }
+    .compare-table td.vaf-val { color: var(--text); font-weight: 500; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-note {
+      margin-top: 1.5rem;
+      padding: 1.125rem 1.5rem;
+      background: rgba(55,48,163,0.05);
+      border: 1px solid rgba(55,48,163,0.15);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .compare-note strong { color: var(--text); }
+
+    /* ── Learning paths ──────────────────────────── */
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .path-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .path-card.featured { border-color: rgba(232,99,10,0.4); }
+    .path-for {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 0.125rem;
+    }
+    .path-card h3 { font-size: 1.0625rem; font-weight: 700; }
+    .path-card p  { font-size: 0.9rem; flex: 1; }
+    .path-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+    .path-badge {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+    .path-available { background: #DCFCE7; color: #15803D; }
+    .path-seed      { background: #FFF7ED; color: #C2410C; }
+    .path-planned   { background: #E0E7FF; color: #3730A3; }
+    .path-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .path-link:hover { text-decoration: underline; }
+    .path-link.muted { color: var(--faint); cursor: default; font-weight: 400; }
+
     /* ── Responsive ──────────────────────────────── */
     @media (max-width: 900px) {
       section { padding: 3.5rem 1.25rem; }
+      .section-trail  { padding: 3rem 1.25rem; }
       .overview-grid  { grid-template-columns: 1fr; gap: 2.5rem; }
       .tools-grid     { grid-template-columns: 1fr; }
+      .decision-first-box { grid-template-columns: 1fr; }
+      .viewpoints-grid { grid-template-columns: repeat(2, 1fr); }
+      .problem-grid   { grid-template-columns: 1fr; }
+      .compare-table  { font-size: 0.875rem; }
       nav { padding: 0 1.25rem; }
       .nav-links { display: none; }
     }
@@ -550,6 +808,8 @@
       .bands-wrap .band-desc { display: none; }
       .hero-trust { gap: 1rem; }
       .dims-grid { grid-template-columns: 1fr; }
+      .viewpoints-grid { grid-template-columns: 1fr; }
+      .trail-steps { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -562,10 +822,11 @@
       VSF Match
     </a>
     <ul class="nav-links">
-      <li><a href="#framework">Framework</a></li>
-      <li><a href="#dimensions">Dimensions</a></li>
-      <li><a href="#bands">Bands</a></li>
-      <li><a href="#standards">Standards</a></li>
+      <li><a href="#start-here" style="color:var(--accent);font-weight:600">Start Here</a></li>
+      <li><a href="#what-is-ea">What is EA?</a></li>
+      <li><a href="#vaf-core">VAF Core</a></li>
+      <li><a href="#learning-paths">Learning Paths</a></li>
+      <li><a href="#dimensions">VSF Dimensions</a></li>
       <li><a href="#ecosystem">Ecosystem</a></li>
       <li><a href="https://zencloudau.github.io/velocity-academy/">Academy</a></li>
     </ul>
@@ -585,13 +846,271 @@
     </div>
     <div class="btn-group">
       <a href="/vsf-match/match/" class="btn-primary">Run VSF Match →</a>
-      <a href="#framework" class="btn-outline">Explore the Framework ↓</a>
+      <a href="#start-here" class="btn-outline">New to VAF? Start Here ↓</a>
     </div>
     <div class="hero-trust">
       <span class="hero-trust-item">ISO/IEC/IEEE 42010:2011 Aligned</span>
       <span class="hero-trust-item">TOGAF 10 Compatible</span>
       <span class="hero-trust-item">Open Source · ZenCloud</span>
       <span class="hero-trust-item">Australian Enterprise Market</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Start Here Trail ─────────────────────────────── -->
+<section id="start-here" class="section-trail">
+  <div class="container">
+    <div class="trail-header">
+      <div>
+        <p class="section-label">Beginner Trail</p>
+        <h2 style="margin-bottom:0.25rem">New to VAF? Start here.</h2>
+        <p style="font-size:0.9375rem;margin-top:0.375rem">Five steps from zero knowledge to your first learning path. Follow in order or jump to what you need.</p>
+      </div>
+      <a href="#dimensions" class="trail-skip">Already familiar with VAF? Skip to the VSF dimensions →</a>
+    </div>
+    <div class="trail-steps">
+      <div class="trail-step">
+        <h4>What is Enterprise Architecture?</h4>
+        <p>Understand the discipline before the framework. <a href="#what-is-ea">Read the plain-language explainer ↓</a></p>
+      </div>
+      <div class="trail-step">
+        <h4>Why a new framework?</h4>
+        <p>The three problems with traditional EA that VAF was built to solve. <a href="#why-vaf">See the problems ↓</a></p>
+      </div>
+      <div class="trail-step">
+        <h4>Learn the VAF core concept</h4>
+        <p>Decision-first architecture and the six viewpoints explained simply. <a href="#vaf-core">Learn VAF core ↓</a></p>
+      </div>
+      <div class="trail-step">
+        <h4>VAF and TOGAF 10</h4>
+        <p>How VAF relates to the world's most adopted EA framework. <a href="#togaf-compare">See the comparison ↓</a></p>
+      </div>
+      <div class="trail-step cta">
+        <h4>Choose your learning path</h4>
+        <p>Pick the right entry point based on your role and experience. <a href="#learning-paths">Choose a path ↓</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── What is EA ─────────────────────────────────────── -->
+<section id="what-is-ea">
+  <div class="container">
+    <p class="section-label">Step 1 — Foundation</p>
+    <h2>What is Enterprise Architecture?</h2>
+    <div class="ea-explainer">
+      <p>Every organisation — a hospital, a bank, a government agency — runs on thousands of interconnected decisions about technology, process, and people. When those decisions are made inconsistently, without a shared model of where the organisation is going, the result is technical debt, failed programmes, and systems that work against each other instead of together.</p>
+      <p><strong>Enterprise Architecture</strong> is the discipline that makes those decisions well. Not by drawing diagrams first and hoping someone reads them. Not by producing 200-page documents that arrive after the decision is already made. By asking a simpler question first:</p>
+      <div class="callout-box">
+        <p>"What decision are we actually making, who needs to make it, and what is the minimum information we need to make it well?"</p>
+      </div>
+      <p>An enterprise architect is not a diagrammer or a documenter. They are a decision navigator — someone who identifies the choices that will shape a system, brings the right people into the room, and ensures the outcome is recorded so the same debate doesn't happen again next quarter.</p>
+      <p>Architecture practice spans every sector: financial services, government, health, defence, utilities, and technology. It operates at every level: from a single application decision to a billion-dollar transformation programme. What stays constant is the core discipline — making decisions well, at the right time, with the right evidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why VAF ────────────────────────────────────────── -->
+<section id="why-vaf" class="section-alt">
+  <div class="container">
+    <p class="section-label">Step 2 — The Problem</p>
+    <h2>Why was VAF built?</h2>
+    <p class="intro-text" style="margin-top:0.5rem">Traditional enterprise architecture methods were designed for a slower world. Three structural problems appear repeatedly across organisations that follow conventional EA practice.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-num">Problem 01</span>
+        <h3>Decisions happen before architecture does</h3>
+        <p>By the time a traditional EA team produces a document, the delivery team has already moved. The architecture artefact describes a past state — it doesn't shape the future. The business made the call in a meeting two weeks ago.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-num">Problem 02</span>
+        <h3>Documents describe — they don't decide</h3>
+        <p>Most architecture output shows what currently exists: landscape diagrams, capability maps, as-is assessments. These describe the landscape but don't frame a specific choice. The person who needs to make a decision gets a map, not a recommendation.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-num">Problem 03</span>
+        <h3>Rationale disappears</h3>
+        <p>Why a decision was made vanishes into email threads and meeting notes. Six months later, a new team member asks why the system works this way, and no one can answer. The same debate restarts in the next programme — from scratch.</p>
+      </div>
+    </div>
+    <div class="callout-box" style="margin-top:2rem">
+      <p>VAF was built to solve all three — not by adding more process, but by inverting the model: <strong>decisions first, then the minimum artefact that makes that decision well.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ── VAF Core ────────────────────────────────────────── -->
+<section id="vaf-core">
+  <div class="container">
+    <p class="section-label">Step 3 — The Framework</p>
+    <h2>VAF Core: Decision-First Architecture</h2>
+    <p class="intro-text" style="margin-top:0.5rem">The Velocity Architecture Framework™ organises all architecture work around decisions, not documents. Here is the core concept and the six viewpoints that make up the full framework.</p>
+
+    <div class="decision-first-box">
+      <div class="df-col old">
+        <span class="df-col-label">Traditional EA</span>
+        <h4>Documents → Decisions</h4>
+        <p>Produce artefacts first. Present to stakeholders. Hope a decision follows. Artefacts are often comprehensive, generic, and late.</p>
+      </div>
+      <div class="df-col new">
+        <span class="df-col-label">VAF — Decision-First</span>
+        <h4>Decisions → Minimum Artefacts</h4>
+        <p>Identify the decision to be made. Produce only the artefact that frames that specific decision. Everything else is waste until needed.</p>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-bottom:1rem">The Six VAF Viewpoints</p>
+    <p style="color:var(--muted);margin-bottom:1.5rem;max-width:680px">VAF organises architecture practice into six viewpoints. Each viewpoint produces a small set of targeted artefacts — 18 artefacts in total — each anchored to a decision type, not a document convention.</p>
+    <div class="viewpoints-grid">
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 01</span>
+        <h4>Governance</h4>
+        <p>Who decides what, how decisions are made, and how they are recorded and traceable over time. The accountability layer of the framework.</p>
+        <p class="vp-output">Artefacts: Decision Register, Architecture Authority Model, Governance Charter</p>
+      </div>
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 02</span>
+        <h4>Strategy</h4>
+        <p>Where the organisation is heading and the architectural choices that make that direction achievable. Business strategy translated into architecture intent.</p>
+        <p class="vp-output">Artefacts: Direction Statement, Capability Map, Strategic Architecture Brief</p>
+      </div>
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 03</span>
+        <h4>Design</h4>
+        <p>The solution shape: components, integrations, and the technical decisions that define how the system will be built and operated.</p>
+        <p class="vp-output">Artefacts: Solution Overview, Architecture Decision Record, Integration Design</p>
+      </div>
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 04</span>
+        <h4>Delivery Velocity</h4>
+        <p>How the architecture enables fast, low-risk delivery. Identifies the sequencing, dependencies, and constraints that affect delivery pace.</p>
+        <p class="vp-output">Artefacts: Delivery Architecture, Risk &amp; Constraint Register, Sequencing Model</p>
+      </div>
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 05</span>
+        <h4>Operating Rhythm</h4>
+        <p>How the architecture team stays synchronised with delivery teams. Defines the cadence, touchpoints, and communication patterns for effective architecture governance.</p>
+        <p class="vp-output">Artefacts: Engagement Model, Review Cadence, Architecture Radar</p>
+      </div>
+      <div class="vp-card">
+        <span class="vp-num">Viewpoint 06</span>
+        <h4>Practitioner Capability</h4>
+        <p>How architects continuously improve their own practice. Covers skills development, tooling, and the frameworks architects use to assess and grow their own capability.</p>
+        <p class="vp-output">Artefacts: Capability Profile, Practice Maturity Assessment, VSF Score</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOGAF Compare ───────────────────────────────────── -->
+<section id="togaf-compare" class="section-alt">
+  <div class="container">
+    <p class="section-label">Step 4 — Standards Context</p>
+    <h2>VAF and TOGAF 10</h2>
+    <p class="intro-text" style="margin-top:0.5rem">TOGAF is the world's most widely adopted enterprise architecture framework, used by thousands of organisations globally. VAF is not a replacement — it is a compatible, open-source alternative built for practitioners who need architecture at delivery speed.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>TOGAF 10</th>
+          <th class="vaf-col">Velocity Architecture Framework™</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core philosophy</td>
+          <td>Process-first — follow the ADM phases to produce architecture</td>
+          <td class="vaf-val">Decision-first — identify the decision, then produce the minimum artefact</td>
+        </tr>
+        <tr>
+          <td>Artefact volume</td>
+          <td>Comprehensive — 100+ document types across the content framework</td>
+          <td class="vaf-val">Minimal — 18 targeted artefacts across 6 viewpoints</td>
+        </tr>
+        <tr>
+          <td>Speed</td>
+          <td>Weeks to months per architecture cycle</td>
+          <td class="vaf-val">Hours to days — board-ready packs from a brief</td>
+        </tr>
+        <tr>
+          <td>Cost of entry</td>
+          <td>Paid certification required (Foundation + Practitioner)</td>
+          <td class="vaf-val">Open source — free to learn, use, and adapt</td>
+        </tr>
+        <tr>
+          <td>Standards alignment</td>
+          <td>The Open Group standard</td>
+          <td class="vaf-val">ISO/IEC/IEEE 42010:2011 aligned · TOGAF ADM compatible</td>
+        </tr>
+        <tr>
+          <td>AI readiness</td>
+          <td>Not designed for AI-assisted artefact generation</td>
+          <td class="vaf-val">Built for agentic AI — prompts and agents produce VAF outputs natively</td>
+        </tr>
+        <tr>
+          <td>Governance model</td>
+          <td>Proprietary — The Open Group</td>
+          <td class="vaf-val">Community-governed — open source, publicly versioned</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="compare-note">
+      <strong>Important:</strong> VAF and TOGAF are not mutually exclusive. Many practitioners use both — TOGAF for institutional compliance and stakeholder communication, VAF for day-to-day decision-speed practice. If your organisation is TOGAF-certified, VAF adds velocity without replacing your existing investment. If you are learning architecture for the first time, VAF is the faster path to practical capability.
+    </div>
+  </div>
+</section>
+
+<!-- ── Learning Paths ─────────────────────────────────── -->
+<section id="learning-paths">
+  <div class="container">
+    <p class="section-label">Step 5 — Choose Your Path</p>
+    <h2>Where do you go from here?</h2>
+    <p class="intro-text" style="margin-top:0.5rem">Four entry points depending on your role, experience, and goal. Pick the one that matches where you are today.</p>
+
+    <div class="path-grid">
+
+      <div class="path-card">
+        <span class="path-for">If you are new to architecture</span>
+        <h3>VAF Foundation</h3>
+        <p>The full VAF core concepts course. Covers decision-first architecture, the six viewpoints, governance principles, and how to produce your first architecture artefact. No prior experience required.</p>
+        <div class="path-status-row">
+          <span class="path-badge path-seed">In Development</span>
+          <a href="https://zencloudau.github.io/velocity-academy/#learning-paths" class="path-link">Academy →</a>
+        </div>
+      </div>
+
+      <div class="path-card featured">
+        <span class="path-for">If you are a working solution architect</span>
+        <h3>VAF-SA Practitioner</h3>
+        <p>The VAF-SA field method — six modules covering how to read a complex environment, extract missing intelligence, select the right design, and produce delivery-ready artefacts under pressure. Content available now.</p>
+        <div class="path-status-row">
+          <span class="path-badge path-available">Available Now</span>
+          <a href="https://zencloudau.github.io/vaf-sa/" class="path-link">Start VAF-SA →</a>
+        </div>
+      </div>
+
+      <div class="path-card">
+        <span class="path-for">If you are an enterprise architect</span>
+        <h3>VAF Enterprise Architecture</h3>
+        <p>Full VAF framework for enterprise architects. Portfolio governance, capability design, transformation architecture, and decision-first operating model at enterprise scale. Aligned to ISO 42010 and TOGAF 10.</p>
+        <div class="path-status-row">
+          <span class="path-badge path-seed">Seed Content</span>
+          <a href="https://zencloudau.github.io/velocity-architecture/" class="path-link">VAF Framework →</a>
+        </div>
+      </div>
+
+      <div class="path-card">
+        <span class="path-for">If you want to benchmark your current skills</span>
+        <h3>VSF Career Match</h3>
+        <p>Not sure which path fits? Score your CV against live architecture roles using the five VSF dimensions. See exactly where your gaps are, which band you sit in, and which learning path closes the gap fastest.</p>
+        <div class="path-status-row">
+          <span class="path-badge path-available">Live Tool</span>
+          <a href="/vsf-match/match/" class="path-link">Run VSF Match →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
