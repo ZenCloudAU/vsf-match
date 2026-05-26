@@ -1,5 +1,14 @@
 import React from 'react'
 import { getBand } from '../lib/vsf-scorer.js'
+import { downloadScoreCard } from '../lib/score-card.js'
+
+const ACADEMY_PATHS = {
+  'Chief Architect':              'Enterprise Architecture Practitioner',
+  'Principal / Lead EA':          'Solution Architecture Professional',
+  'Senior Solution Architect':    'VAF-SA Certified',
+  'Mid-level Solution Architect': 'Architecture Foundations',
+  'Graduate / Junior EA':         'Architecture Foundations',
+}
 
 export default function JobResults({ results = [], onSelectJob, onReset }) {
   return (
@@ -74,6 +83,20 @@ export default function JobResults({ results = [], onSelectJob, onReset }) {
 
                 <button className="btn-secondary" onClick={() => onSelectJob?.(job)}>
                   View full analysis
+                </button>
+              </div>
+
+              <div className="result-card__footer">
+                <a
+                  className="academy-path-badge"
+                  href="https://velocity-academy.pages.dev/#learning-paths"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Academy path: {ACADEMY_PATHS[band.label] || 'Architecture Foundations'} →
+                </a>
+                <button className="btn-score-card" onClick={() => downloadScoreCard(job)}>
+                  ↓ Score card
                 </button>
               </div>
             </article>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { getWatchlist, addToWatchlist, removeFromWatchlist, getRuns, deleteRun } from '../lib/saved-scores.js'
 
 const SAMPLE_CV = `Alex Morgan — Enterprise Architect
 Melbourne, VIC, Australia
@@ -46,9 +47,29 @@ const VSF_DIMS = [
   ['Capability Transferred','10%'],
 ]
 
-export default function CVInput({ cvText, setCvText, role, setRole, region, setRegion, onRun, error }) {
+export default function CVInput({ cvText, setCvText, role, setRole, region, setRegion, onRun, onRestoreRun, error }) {
   const hasApiKey = import.meta.env.VITE_ANTHROPIC_API_KEY &&
     import.meta.env.VITE_ANTHROPIC_API_KEY !== 'sk-ant-...'
+
+  const [watchlist, setWatchlist]   = useState(() => getWatchlist())
+  const [pastRuns,  setPastRuns]    = useState(() => getRuns())
+  const [showRuns,  setShowRuns]    = useState(false)
+
+  function handleAddWatch() {
+    if (!role.trim()) return
+    addToWatchlist(role.trim())
+    setWatchlist(getWatchlist())
+  }
+
+  function handleRemoveWatch(r) {
+    removeFromWatchlist(r)
+    setWatchlist(getWatchlist())
+  }
+
+  function handleDeleteRun(id) {
+    deleteRun(id)
+    setPastRuns(getRuns())
+  }
 
   return (
     <div className="input-screen">
@@ -108,14 +129,32 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
             <div className="field">
               <label htmlFor="role">Target Role</label>
               <p className="field-hint">Job title to search the live market</p>
-              <input
-                id="role"
-                type="text"
-                className="input"
-                value={role}
-                onChange={e => setRole(e.target.value)}
-                placeholder="e.g. Enterprise Architect"
-              />
+              <div className="input-with-action">
+                <input
+                  id="role"
+                  type="text"
+                  className="input"
+                  value={role}
+                  onChange={e => setRole(e.target.value)}
+                  placeholder="e.g. Enterprise Architect"
+                />
+                <button
+                  className="btn-watch"
+                  onClick={handleAddWatch}
+                  disabled={!role.trim()}
+                  title="Save to watchlist"
+                >★</button>
+              </div>
+              {watchlist.length > 0 && (
+                <div className="watchlist-chips">
+                  {watchlist.map(r => (
+                    <span key={r} className="watchlist-chip">
+                      <button className="chip-role" onClick={() => setRole(r)}>{r}</button>
+                      <button className="chip-remove" onClick={() => handleRemoveWatch(r)}>×</button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="field">
@@ -151,6 +190,34 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
           </div>
         </div>
       </div>
+
+      {pastRuns.length > 0 && (
+        <div className="past-runs-section">
+          <button className="past-runs-toggle" onClick={() => setShowRuns(v => !v)}>
+            {showRuns ? '▾' : '▸'} Past Runs ({pastRuns.length})
+          </button>
+          {showRuns && (
+            <div className="past-runs-list">
+              {pastRuns.map(run => {
+                const topScore = (run.scores || []).reduce((best, s) => Math.max(best, s.overallScore || 0), 0)
+                const date = new Date(run.date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+                return (
+                  <div key={run.id} className="past-run-row">
+                    <div className="past-run-info">
+                      <span className="past-run-role">{run.role}</span>
+                      <span className="past-run-meta">{date} · {(run.scores || []).length} roles · Top {topScore}/10</span>
+                    </div>
+                    <div className="past-run-actions">
+                      <button className="btn-ghost" onClick={() => onRestoreRun?.(run)}>Restore →</button>
+                      <button className="btn-ghost past-run-delete" onClick={() => handleDeleteRun(run.id)}>×</button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

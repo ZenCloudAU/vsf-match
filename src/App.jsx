@@ -5,6 +5,7 @@ import GapAnalysis from './components/GapAnalysis.jsx'
 import LearningPath from './components/LearningPath.jsx'
 import { fetchLiveJobs } from './lib/jooble.js'
 import { scoreCV } from './lib/vsf-scorer.js'
+import { saveRun } from './lib/saved-scores.js'
 
 const PHASE_STEPS = ['input', 'results', 'gap', 'learning']
 const PHASE_LABELS = ['Input', 'Results', 'Gap Analysis', 'Learning Path']
@@ -70,6 +71,7 @@ export default function App() {
       }
 
       setScores(results)
+      saveRun({ role, region, cvText, scores: results })
       setPhase('results')
     } catch (err) {
       setError(err.message)
@@ -80,6 +82,17 @@ export default function App() {
   function handleSelectJob(score) {
     setSelectedJob(score)
     setPhase('gap')
+  }
+
+  function handleRestoreRun(run) {
+    setCvText(run.cvText || '')
+    setRole(run.role || '')
+    setRegion(run.region || 'Brisbane, Australia')
+    setScores(run.scores || [])
+    setJobs([])
+    setSelectedJob(null)
+    setSelectedGap(null)
+    setPhase('results')
   }
 
   function handleSelectGap(gap) {
@@ -127,6 +140,7 @@ export default function App() {
             role={role} setRole={setRole}
             region={region} setRegion={setRegion}
             onRun={handleRun}
+            onRestoreRun={handleRestoreRun}
             error={error}
           />
         )}
