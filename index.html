@@ -1,17 +1,934 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VSF Match — Career Readiness Engine</title>
-    <link rel="icon" type="image/svg+xml" href="/vsf-match/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/vsf-match/assets/index.src-Cs-VEbPj.js"></script>
-    <link rel="stylesheet" crossorigin href="/vsf-match/assets/index-sJhz8K3l.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Success Factor™ — Architecture Career Framework</title>
+  <meta name="description" content="The five-dimension framework for measuring architecture career seniority. ISO/IEC/IEEE 42010 aligned, TOGAF 10 compatible, open-source. Built for enterprise architects across Australia.">
+  <link rel="icon" type="image/svg+xml" href="/vsf-match/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,400;0,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #F8FAFC;
+      --bg-alt:   #F1F5F9;
+      --white:    #FFFFFF;
+      --text:     #0F172A;
+      --muted:    #475569;
+      --faint:    #94A3B8;
+      --border:   #E2E8F0;
+      --accent:   #E8630A;
+      --navy:     #0F172A;
+      --navy-2:   #1E293B;
+      --navy-3:   #334155;
+      --font:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono:     'DM Mono', 'Courier New', monospace;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* ── Nav ─────────────────────────────────────── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      height: 64px;
+      gap: 2rem;
+    }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-brand-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      flex: 1;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 1.125rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* ── Layout ──────────────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    h3 { font-size: 1.0625rem; font-weight: 700; color: var(--text); margin-bottom: 0.375rem; }
+    p { color: var(--muted); line-height: 1.75; }
+    .intro-text { max-width: 680px; font-size: 1.0625rem; }
+    .section-alt { background: var(--bg-alt); }
+
+    /* ── Hero ────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #1a1f35 100%);
+      padding: 7rem 2rem 6rem;
+    }
+    .hero-bar {
+      display: inline-block;
+      background: var(--accent);
+      width: 48px;
+      height: 4px;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.08;
+      color: white;
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 1.125rem;
+      display: block;
+    }
+    .hero-sub {
+      font-size: clamp(1.125rem, 2.5vw, 1.3125rem);
+      color: #93C5FD;
+      margin: 1.25rem 0 1rem;
+      font-weight: 500;
+      line-height: 1.45;
+      max-width: 640px;
+    }
+    .hero-copy {
+      max-width: 580px;
+      font-size: 1rem;
+      color: #CBD5E1;
+      margin-bottom: 2.75rem;
+      line-height: 1.75;
+    }
+    .hero-copy p { color: #CBD5E1; }
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 0.875rem 1.875rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      padding: 0.875rem 1.875rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border: 2px solid rgba(255,255,255,0.28);
+      transition: border-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.65); }
+    .hero-trust {
+      margin-top: 3rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 2rem;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #64748B;
+      letter-spacing: 0.06em;
+    }
+    .hero-trust-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ── Framework overview ──────────────────────── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .overview-body p { font-size: 1.0625rem; margin-bottom: 1.25rem; }
+    .overview-props {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .prop-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 1.25rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .prop-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .prop-row h4 { font-size: 0.9375rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .prop-row p { font-size: 0.875rem; margin: 0; }
+
+    /* ── Dimensions ──────────────────────────────── */
+    .dims-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .dim-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .dim-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 12px 12px 0 0;
+    }
+    .dim-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+    .dim-num {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .dim-card h3 { font-size: 1.125rem; margin-bottom: 0; }
+    .dim-weight {
+      font-family: var(--mono);
+      font-size: 1.375rem;
+      font-weight: 500;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .dim-card p { font-size: 0.9375rem; margin: 0.75rem 0 1rem; }
+    .dim-anchors {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    .anchor-row {
+      display: flex;
+      gap: 0.625rem;
+      font-size: 0.8125rem;
+    }
+    .anchor-level {
+      font-family: var(--mono);
+      color: var(--accent);
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      margin-top: 2px;
+      min-width: 28px;
+    }
+    .anchor-row span:last-child { color: var(--muted); }
+
+    /* ── Bands ───────────────────────────────────── */
+    .bands-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin-top: 2.5rem;
+    }
+    .band-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.125rem 1.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      border-left-width: 4px;
+    }
+    .band-range {
+      font-family: var(--mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+    .band-label { font-weight: 700; font-size: 1rem; flex: 1; }
+    .band-desc { font-size: 0.875rem; color: var(--muted); max-width: 440px; }
+    .band-graduate  { border-left-color: #964219; }
+    .band-graduate  .band-range, .band-graduate  .band-label { color: #964219; }
+    .band-midlevel  { border-left-color: #d19900; }
+    .band-midlevel  .band-range, .band-midlevel  .band-label { color: #b08000; }
+    .band-senior    { border-left-color: #006494; }
+    .band-senior    .band-range, .band-senior    .band-label { color: #006494; }
+    .band-principal { border-left-color: #437a22; }
+    .band-principal .band-range, .band-principal .band-label { color: #437a22; }
+    .band-chief     { border-left-color: #01696f; }
+    .band-chief     .band-range, .band-chief     .band-label { color: #01696f; }
+
+    /* ── Standards (dark) ────────────────────────── */
+    .section-dark { background: var(--navy); }
+    .section-dark .section-label { color: #93C5FD; }
+    .section-dark h2  { color: white; }
+    .section-dark .intro-text { color: #CBD5E1; }
+    .standards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .std-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .std-card-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.625rem;
+      border-radius: 20px;
+      background: rgba(232,99,10,0.18);
+      color: #FB923C;
+      margin-bottom: 0.875rem;
+    }
+    .std-card h3 { color: white; font-size: 1rem; margin-bottom: 0.5rem; }
+    .std-card p  { color: #94A3B8; font-size: 0.9rem; line-height: 1.7; }
+    .std-card ul {
+      margin-top: 0.875rem;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+    .std-card ul li {
+      font-size: 0.8375rem;
+      color: #94A3B8;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .std-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    .togaf-note {
+      margin-top: 2.5rem;
+      padding: 1.5rem 2rem;
+      background: rgba(232,99,10,0.08);
+      border: 1px solid rgba(232,99,10,0.2);
+      border-radius: 10px;
+    }
+    .togaf-note p { color: #CBD5E1; font-size: 0.9375rem; line-height: 1.75; }
+    .togaf-note strong { color: #FB923C; }
+
+    /* ── Ecosystem ───────────────────────────────── */
+    .eco-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .eco-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .eco-card:hover {
+      border-color: rgba(232,99,10,0.4);
+      box-shadow: 0 4px 16px rgba(232,99,10,0.08);
+    }
+    .eco-role {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.375rem;
+    }
+    .eco-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .eco-card p { font-size: 0.875rem; margin: 0; }
+
+    /* ── Tools CTA ───────────────────────────────── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .tool-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .tool-card.featured {
+      border-color: rgba(232,99,10,0.35);
+      background: linear-gradient(135deg, rgba(232,99,10,0.04) 0%, rgba(255,255,255,1) 60%);
+    }
+    .tool-status {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      margin-bottom: 0.875rem;
+    }
+    .status-live    { background: #DCFCE7; color: #15803D; }
+    .status-soon    { background: #E0E7FF; color: #3730A3; }
+    .tool-card h3   { font-size: 1.125rem; margin-bottom: 0.5rem; }
+    .tool-card p    { font-size: 0.9375rem; margin-bottom: 1.25rem; }
+    .tool-card .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.15s;
+    }
+    .tool-card .tool-link:hover { gap: 0.625rem; }
+    .tool-card .tool-link.muted {
+      color: var(--muted);
+      font-weight: 500;
+      cursor: default;
+    }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      padding: 3rem 2rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-brand {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .footer-sub {
+      font-size: 0.875rem;
+      color: #64748B;
+      margin-bottom: 1.25rem;
+      max-width: 640px;
+    }
+    .footer-sub p { color: #64748B; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-bottom {
+      font-size: 0.8125rem;
+      color: #334155;
+      border-top: 1px solid #1E293B;
+      padding-top: 1.25rem;
+    }
+    .footer-bottom p { color: #334155; }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 900px) {
+      section { padding: 3.5rem 1.25rem; }
+      .overview-grid  { grid-template-columns: 1fr; gap: 2.5rem; }
+      .tools-grid     { grid-template-columns: 1fr; }
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 5rem 1.25rem 4rem; }
+      .bands-wrap .band-desc { display: none; }
+      .hero-trust { gap: 1rem; }
+      .dims-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/vsf-match/" class="nav-brand">
+      <span class="nav-brand-dot"></span>
+      VSF Match
+    </a>
+    <ul class="nav-links">
+      <li><a href="#framework">Framework</a></li>
+      <li><a href="#dimensions">Dimensions</a></li>
+      <li><a href="#bands">Bands</a></li>
+      <li><a href="#standards">Standards</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="https://zencloudau.github.io/velocity-academy/">Academy</a></li>
+    </ul>
+    <a href="/vsf-match/match/" class="nav-cta">Run VSF Match →</a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-eyebrow">VELOCITY SUCCESS FACTOR™</span>
+    <div class="hero-bar"></div>
+    <h1>The Architecture Career Framework</h1>
+    <p class="hero-sub">Five observable dimensions. Live market scoring. Personalised learning pathways.</p>
+    <div class="hero-copy">
+      <p>VSF is the career measurement layer of the Velocity Architecture Framework™ — an open-source, ISO-aligned methodology for enterprise architects. Know exactly where you stand, what roles you're ready for, and what to build next.</p>
+    </div>
+    <div class="btn-group">
+      <a href="/vsf-match/match/" class="btn-primary">Run VSF Match →</a>
+      <a href="#framework" class="btn-outline">Explore the Framework ↓</a>
+    </div>
+    <div class="hero-trust">
+      <span class="hero-trust-item">ISO/IEC/IEEE 42010:2011 Aligned</span>
+      <span class="hero-trust-item">TOGAF 10 Compatible</span>
+      <span class="hero-trust-item">Open Source · ZenCloud</span>
+      <span class="hero-trust-item">Australian Enterprise Market</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Framework ────────────────────────────────────── -->
+<section id="framework">
+  <div class="container">
+    <p class="section-label">Framework</p>
+    <h2>Measure what actually matters in architecture careers</h2>
+    <div class="overview-grid">
+      <div class="overview-body">
+        <p>The Velocity Success Factor™ defines architecture career seniority through five observable, evidence-based dimensions. Unlike competency frameworks that rely on self-assessment, VSF is scored against real job descriptions — using the same language hiring managers use.</p>
+        <p>It is the practitioner-facing career layer of the <strong>Velocity Architecture Framework™</strong> (VAF), a decision-first enterprise architecture methodology built for the speed requirements of modern transformation programmes and agentic AI environments.</p>
+        <p>VSF anchors each dimension to concrete, citable evidence: scale of organisation, complexity of environment, governance authority exercised, outcomes delivered, and capability left behind. No vague skill labels. No self-rated proficiency scales.</p>
+      </div>
+      <div class="overview-props">
+        <div class="prop-row">
+          <span class="prop-icon">⚖</span>
+          <div>
+            <h4>Evidence-Based Scoring</h4>
+            <p>Every score maps to observable, citable evidence from your CV and the job description — not self-rated competency levels.</p>
+          </div>
+        </div>
+        <div class="prop-row">
+          <span class="prop-icon">⟳</span>
+          <div>
+            <h4>Live Market Calibration</h4>
+            <p>Scored against real, current job postings in your region — not static benchmarks or industry averages.</p>
+          </div>
+        </div>
+        <div class="prop-row">
+          <span class="prop-icon">↗</span>
+          <div>
+            <h4>Gap to Learning Path</h4>
+            <p>Each gap generates a week-by-week learning pathway calibrated to senior EA level, with specific named resources.</p>
+          </div>
+        </div>
+        <div class="prop-row">
+          <span class="prop-icon">◎</span>
+          <div>
+            <h4>Open &amp; Interoperable</h4>
+            <p>Built on open-source principles. Compatible with ISO 42010, TOGAF 10, and the broader VAF ecosystem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Dimensions ────────────────────────────────────── -->
+<section id="dimensions" class="section-alt">
+  <div class="container">
+    <p class="section-label">VSF Dimensions</p>
+    <h2>Five dimensions. Every architecture role measured the same way.</h2>
+    <p class="intro-text" style="margin-top:0.5rem">Each dimension is weighted to reflect its relative importance in enterprise architecture career progression. Scores run 1.0–10.0, derived from evidence in your CV measured against the specific job description.</p>
+
+    <div class="dims-grid">
+
+      <div class="dim-card">
+        <div class="dim-card-header">
+          <div>
+            <span class="dim-num">01</span>
+            <h3>Scale of Impact</h3>
+          </div>
+          <span class="dim-weight">25%</span>
+        </div>
+        <p>How far does your work reach? This dimension measures the organisational and financial scope of your architectural contributions — users affected, systems integrated, geographies spanned, and dollars at risk.</p>
+        <div class="dim-anchors">
+          <div class="anchor-row"><span class="anchor-level">8–10</span><span>Multi-national programmes, 1M+ users, $100M+ financial consequence</span></div>
+          <div class="anchor-row"><span class="anchor-level">6–8</span><span>Enterprise-wide transformation, $10M+, hundreds of thousands of users</span></div>
+          <div class="anchor-row"><span class="anchor-level">4–6</span><span>Divisional or business-unit scope, $1–10M programmes</span></div>
+          <div class="anchor-row"><span class="anchor-level">2–4</span><span>Team or project-level, limited organisational footprint</span></div>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-card-header">
+          <div>
+            <span class="dim-num">02</span>
+            <h3>Complexity Governed</h3>
+          </div>
+          <span class="dim-weight">25%</span>
+        </div>
+        <p>How difficult was the environment you operated in? Measured by simultaneous complexity vectors: M&amp;A integration, regulatory compliance (APRA, GDPR, ISM, Essential Eight), live production constraints, multi-vendor ecosystems, and geographic distribution.</p>
+        <div class="dim-anchors">
+          <div class="anchor-row"><span class="anchor-level">8–10</span><span>Multiple simultaneous vectors — M&amp;A + regulatory + multi-cloud + legacy migration</span></div>
+          <div class="anchor-row"><span class="anchor-level">6–8</span><span>Two or three significant complexity factors active concurrently</span></div>
+          <div class="anchor-row"><span class="anchor-level">4–6</span><span>Standard enterprise complexity, single-domain or single-platform</span></div>
+          <div class="anchor-row"><span class="anchor-level">2–4</span><span>Greenfield or well-defined single-vendor environment</span></div>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-card-header">
+          <div>
+            <span class="dim-num">03</span>
+            <h3>Authority Held</h3>
+          </div>
+          <span class="dim-weight">20%</span>
+        </div>
+        <p>What real decision-making power did you exercise? This dimension distinguishes between advising and deciding — it looks for formal governance roles: Architecture Review Board chair, Design Authority lead, board-level presentations, and investment sign-off authority.</p>
+        <div class="dim-anchors">
+          <div class="anchor-row"><span class="anchor-level">8–10</span><span>Formal architecture authority with C-suite/board engagement and investment sign-off</span></div>
+          <div class="anchor-row"><span class="anchor-level">6–8</span><span>ARB chair or Design Authority lead with regular executive presentations</span></div>
+          <div class="anchor-row"><span class="anchor-level">4–6</span><span>Senior technical lead with governance influence, advisory capacity</span></div>
+          <div class="anchor-row"><span class="anchor-level">2–4</span><span>Individual contributor with recommendations only, no formal authority</span></div>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-card-header">
+          <div>
+            <span class="dim-num">04</span>
+            <h3>Outcome Integrity</h3>
+          </div>
+          <span class="dim-weight">20%</span>
+        </div>
+        <p>Did the work actually land? Architecture is only valuable when it produces outcomes. This dimension looks for on-time delivery, zero-disruption migrations, measurable business results, and clean programme handovers — not just plans and artefacts.</p>
+        <div class="dim-anchors">
+          <div class="anchor-row"><span class="anchor-level">8–10</span><span>Multiple major programmes delivered on time and on budget with documented outcomes</span></div>
+          <div class="anchor-row"><span class="anchor-level">6–8</span><span>Consistent delivery evidence with specific, citable results</span></div>
+          <div class="anchor-row"><span class="anchor-level">4–6</span><span>Mixed or partially evidenced outcomes, some delivery without specifics</span></div>
+          <div class="anchor-row"><span class="anchor-level">2–4</span><span>Limited outcome evidence or theoretical/incomplete delivery record</span></div>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="dim-card-header">
+          <div>
+            <span class="dim-num">05</span>
+            <h3>Capability Transferred</h3>
+          </div>
+          <span class="dim-weight">10%</span>
+        </div>
+        <p>What did you leave behind? The most senior architects build organisational capability — frameworks, patterns, documented standards, team uplift, and training. This dimension measures the durable, transferable value of your contribution beyond the immediate engagement.</p>
+        <div class="dim-anchors">
+          <div class="anchor-row"><span class="anchor-level">8–10</span><span>Enterprise-wide frameworks or standards adopted broadly; significant team capability uplift</span></div>
+          <div class="anchor-row"><span class="anchor-level">6–8</span><span>Patterns or frameworks created and adopted; coaching or mentoring with evidence</span></div>
+          <div class="anchor-row"><span class="anchor-level">4–6</span><span>Some documentation, knowledge sharing, or structured training delivered</span></div>
+          <div class="anchor-row"><span class="anchor-level">2–4</span><span>Individual contribution only, minimal durable knowledge transfer</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Benchmark Bands ────────────────────────────────── -->
+<section id="bands">
+  <div class="container">
+    <p class="section-label">Benchmark Bands</p>
+    <h2>Where do you stand?</h2>
+    <p class="intro-text" style="margin-top:0.5rem">The VSF weighted score (sum of dimension × weight) places you in one of five benchmark bands calibrated to the Australian enterprise architecture market. These bands align with real hiring expectations at each level.</p>
+
+    <div class="bands-wrap">
+      <div class="band-row band-graduate">
+        <span class="band-range">3.0 – 4.5</span>
+        <span class="band-label">Graduate / Junior EA</span>
+        <span class="band-desc">Early-career practitioner. Works within defined scope under supervision. Limited independent governance or delivery track record.</span>
+      </div>
+      <div class="band-row band-midlevel">
+        <span class="band-range">4.5 – 6.0</span>
+        <span class="band-label">Mid-level Solution Architect</span>
+        <span class="band-desc">Independent contributor delivering within a domain. Emerging governance influence. Evidence of delivered outcomes at project scale.</span>
+      </div>
+      <div class="band-row band-senior">
+        <span class="band-range">6.0 – 7.5</span>
+        <span class="band-label">Senior Solution Architect / Lead SA</span>
+        <span class="band-desc">Operates at programme level. Cross-domain influence. Regular executive engagement. Consistent delivery record with measurable business outcomes.</span>
+      </div>
+      <div class="band-row band-principal">
+        <span class="band-range">7.5 – 8.5</span>
+        <span class="band-label">Principal / Lead Enterprise Architect</span>
+        <span class="band-desc">Enterprise-wide influence. Formal architecture governance authority. Board or C-suite level engagement. Sustained track record at scale and complexity.</span>
+      </div>
+      <div class="band-row band-chief">
+        <span class="band-range">8.5 – 10.0</span>
+        <span class="band-label">Chief Architect / Distinguished Engineer</span>
+        <span class="band-desc">Organisational architecture ownership. Sets direction across multiple domains. Investment authority. Leaves enduring frameworks and capability uplift.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Standards ────────────────────────────────────── -->
+<section id="standards" class="section-dark">
+  <div class="container">
+    <p class="section-label">Standards &amp; Governance</p>
+    <h2>ISO Aligned. TOGAF 10 Compatible. Open Source.</h2>
+    <p class="intro-text" style="margin-top:0.5rem">The Velocity Architecture Framework™ and the VSF career measurement system are built on open, interoperable principles aligned with internationally recognised architecture standards.</p>
+
+    <div class="standards-grid">
+
+      <div class="std-card">
+        <span class="std-card-badge">ISO / IEC / IEEE 42010</span>
+        <h3>Architecture Description Standard</h3>
+        <p>ISO/IEC/IEEE 42010:2011 is the international standard for Systems and Software Engineering — Architecture Description. VAF aligns with its core architectural concepts:</p>
+        <ul>
+          <li>Architecture viewpoints and views</li>
+          <li>Stakeholder concerns and system context</li>
+          <li>Architecture decisions and rationale (ADRs)</li>
+          <li>Correspondence and consistency rules</li>
+        </ul>
+      </div>
+
+      <div class="std-card">
+        <span class="std-card-badge">TOGAF 10</span>
+        <h3>Enterprise Architecture Compatibility</h3>
+        <p>The Velocity Architecture Framework is structurally compatible with TOGAF 10 while adopting a lighter, decision-first operating model suited to modern transformation velocity:</p>
+        <ul>
+          <li>Architecture Development Method (ADM) alignment</li>
+          <li>Architecture Content Framework compatibility</li>
+          <li>Enterprise Continuum and Repository concepts</li>
+          <li>Architecture Governance principles</li>
+        </ul>
+      </div>
+
+      <div class="std-card">
+        <span class="std-card-badge">Open Governance</span>
+        <h3>Community-Governed Framework</h3>
+        <p>VAF is open-source and community-governed — designed for practitioners, teams, and institutions that need TOGAF-compatible practice without proprietary certification dependency:</p>
+        <ul>
+          <li>Free to use, adapt, and extend</li>
+          <li>No vendor lock-in or proprietary tooling</li>
+          <li>Suitable for academic and institutional adoption</li>
+          <li>Transparent versioning and public artefacts</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="togaf-note">
+      <p><strong>Open-Ground TOGAF 10 Positioning.</strong> VAF is positioned as a next-generation, open-ground alternative for practitioners, universities, and enterprise teams who require a structured EA methodology without the cost and rigidity of proprietary TOGAF certification pathways. It preserves TOGAF 10's conceptual architecture while delivering a practitioner-first, decision-speed operating model — making it suitable for adoption as an open institutional alternative or complement to formal TOGAF 10 training. The Velocity Architecture Academy provides structured learning, practitioner certification, and institutional delivery pathways built on these foundations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ecosystem ─────────────────────────────────────── -->
+<section id="ecosystem">
+  <div class="container">
+    <p class="section-label">Ecosystem</p>
+    <h2>The VAF Ecosystem</h2>
+    <p class="intro-text" style="margin-top:0.5rem">The Velocity Architecture Framework™ operates as an integrated ecosystem of open-source tools, learning resources, and practitioner frameworks — built and maintained by ZenCloud Global Consultants and StudioSix.</p>
+
+    <div class="eco-grid">
+
+      <a href="https://zencloudau.github.io/velocity-architecture/" class="eco-card" target="_blank" rel="noopener">
+        <p class="eco-role">Core Framework</p>
+        <p class="eco-name">Velocity Architecture Framework™</p>
+        <p>Decision-first EA framework. Six viewpoints, 18 artefacts, AI-assisted architecture pack generation. The methodological foundation of the ecosystem.</p>
+      </a>
+
+      <a href="https://zencloudau.github.io/vaf-sa/" class="eco-card" target="_blank" rel="noopener">
+        <p class="eco-role">Practitioner Method</p>
+        <p class="eco-name">VAF-SA</p>
+        <p>Solution Architecture field framework. Six modules, four engagement archetypes, five minimum-viable artefact types. Built for architects in the field.</p>
+      </a>
+
+      <a href="https://zencloudau.github.io/velocity-academy/" class="eco-card" target="_blank" rel="noopener">
+        <p class="eco-role">Learning &amp; Certification</p>
+        <p class="eco-name">Velocity Architecture Academy</p>
+        <p>Structured learning paths, practitioner certification, and institutional delivery for the full VAF ecosystem. Open-ground TOGAF 10 pathway available.</p>
+      </a>
+
+      <a href="/vsf-match/match/" class="eco-card">
+        <p class="eco-role">Career Readiness</p>
+        <p class="eco-name">VSF Match ↗</p>
+        <p>Score your CV against live architecture roles using the five VSF dimensions. Gap analysis, learning path generation, and Academy deep-links.</p>
+      </a>
+
+      <div class="eco-card" style="cursor:default">
+        <p class="eco-role">AI Tooling</p>
+        <p class="eco-name">VAF Agentic AI</p>
+        <p>AI architect agent that produces board-ready architecture packs from a brief. Processes through six VAF viewpoints in minutes.</p>
+      </div>
+
+      <div class="eco-card" style="cursor:default">
+        <p class="eco-role">Advisory</p>
+        <p class="eco-name">ZenCloud Global Consultants</p>
+        <p>Enterprise architecture advisory, transformation leadership, and VAF ecosystem governance. Brisbane, Australia.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Tools CTA ─────────────────────────────────────── -->
+<section id="tools" class="section-alt">
+  <div class="container">
+    <p class="section-label">Tools</p>
+    <h2>Career Intelligence, Applied</h2>
+    <p class="intro-text" style="margin-top:0.5rem">VSF Match is the live application of the Velocity Success Factor framework — scoring your CV against the real job market, identifying gaps, and building personalised learning pathways.</p>
+
+    <div class="tools-grid">
+
+      <div class="tool-card featured">
+        <span class="tool-status status-live">Live</span>
+        <h3>VSF Resume Match</h3>
+        <p>Paste your CV and a target role. The engine fetches live job postings, scores your fit across all five VSF dimensions, identifies every gap with JD evidence, and builds a week-by-week learning path for each gap. Powered by Claude AI.</p>
+        <a href="/vsf-match/match/" class="tool-link">Run VSF Match →</a>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-status status-soon">Coming Soon</span>
+        <h3>VSF Self-Assessment</h3>
+        <p>Rate yourself across all five dimensions using structured anchors — no CV or job description required. Understand your current band and identify where to invest next.</p>
+        <span class="tool-link muted">In development</span>
+      </div>
+
+      <div class="tool-card">
+        <span class="tool-status status-soon">Coming Soon</span>
+        <h3>Role Benchmarking</h3>
+        <p>See what VSF score a given role type typically requires. Compare Chief Architect vs Principal EA vs Senior SA band expectations across sectors and geographies.</p>
+        <span class="tool-link muted">In development</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-brand">Velocity Success Factor™ — VSF Match</p>
+    <p class="footer-sub">Architecture career intelligence built on the Velocity Architecture Framework™. ISO/IEC/IEEE 42010 aligned. TOGAF 10 compatible. Open-source and community-governed.</p>
+    <div class="footer-links">
+      <a href="https://zencloudau.github.io/velocity-architecture/" target="_blank" rel="noopener">Velocity Architecture Framework</a>
+      <a href="https://zencloudau.github.io/vaf-sa/" target="_blank" rel="noopener">VAF-SA</a>
+      <a href="https://zencloudau.github.io/velocity-academy/" target="_blank" rel="noopener">Velocity Architecture Academy</a>
+      <a href="/vsf-match/match/">VSF Match Tool</a>
+      <a href="https://www.zencloud.com.au/" target="_blank" rel="noopener">ZenCloud</a>
+      <a href="https://studiosix.com.au/" target="_blank" rel="noopener">StudioSix</a>
+      <a href="https://github.com/ZenCloudAU/vsf-match" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p class="footer-bottom">© 2026 ZenCloud Global Consultants · Velocity Success Factor™ · Velocity Architecture Framework™ · Brisbane, Australia · Target domain: velocityarchitecture.com.au</p>
+  </div>
+</footer>
+
+</body>
 </html>
