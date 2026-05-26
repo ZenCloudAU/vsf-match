@@ -89,6 +89,14 @@ export default function App() {
 
   return (
     <div className="app">
+      <div className="ecosystem-bar">
+        <div className="ecosystem-bar-inner">
+          <a href="https://velocity-academy.pages.dev/" target="_blank" rel="noopener" className="ecosystem-bar-link">
+            ← Velocity Architecture Academy
+          </a>
+          <span className="ecosystem-bar-meta">ZenCloud · StudioSix</span>
+        </div>
+      </div>
       <header className="app-header">
         <div className="header-inner">
           <div className="logo-block">
@@ -168,7 +176,19 @@ export default function App() {
       </main>
 
       <footer className="app-footer">
-        <p>© 2026 ZenCloud Global Consultants · Velocity Success Factor™ · Brisbane, Australia</p>
+        <div className="footer-inner">
+          <p className="footer-brand">VSF Match</p>
+          <p className="footer-sub">Career Readiness Engine · Velocity Success Factor™ framework · Part of the Velocity Architecture Academy ecosystem.</p>
+          <div className="footer-links">
+            <a href="https://velocity-academy.pages.dev/" target="_blank" rel="noopener">Velocity Architecture Academy</a>
+            <a href="https://velocityarchitectureframework.com/" target="_blank" rel="noopener">Velocity Framework</a>
+            <a href="https://zencloudau.github.io/vaf-sa/" target="_blank" rel="noopener">VAF-SA</a>
+            <a href="https://github.com/ZenCloudAU/vsf-match" target="_blank" rel="noopener">VSF Match GitHub</a>
+            <a href="https://www.zencloud.com.au/" target="_blank" rel="noopener">ZenCloud</a>
+            <a href="https://studiosix.com.au/" target="_blank" rel="noopener">StudioSix</a>
+          </div>
+          <p className="footer-bottom">© 2026 ZenCloud Global Consultants · Velocity Success Factor™ · Brisbane, Australia</p>
+        </div>
       </footer>
     </div>
   )
