@@ -59,6 +59,13 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
           Paste your CV and target role. The engine pulls live jobs, scores your fit across
           five dimensions, identifies every gap, and builds your pathway forward.
         </p>
+        <p className="hero-trust">
+          Scoring powered by the{' '}
+          <a href="https://velocity-academy.pages.dev/" target="_blank" rel="noopener">
+            Velocity Architecture Academy
+          </a>{' '}
+          framework · used by architects across Australia
+        </p>
       </div>
 
       {!hasApiKey && (

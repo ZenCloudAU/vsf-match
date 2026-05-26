@@ -5,7 +5,7 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
   const [path, setPath] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [showScript, setShowScript] = useState(false)
+  const [showScript, setShowScript] = useState(true)
 
   useEffect(() => {
     setLoading(true)
@@ -85,6 +85,30 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
         <p className="bridge-strategy">{path.bridgeStrategy}</p>
       </div>
 
+      {path.audioBriefScript && (
+        <div className="audio-brief-prominent">
+          <div className="audio-brief-header" onClick={() => setShowScript(!showScript)}>
+            <h3>🎙 Audio Brief Script</h3>
+            <span className="audio-brief-hint">
+              {showScript ? 'Hide' : 'Show'} — paste into NotebookLM or ElevenLabs to generate a podcast
+            </span>
+          </div>
+          {showScript && (
+            <div className="audio-script">
+              <pre>{path.audioBriefScript}</pre>
+              <div className="audio-script-actions">
+                <button className="btn-copy-inline" onClick={() => navigator.clipboard.writeText(path.audioBriefScript)}>
+                  Copy Script
+                </button>
+                <a className="btn-copy-inline" href="https://notebooklm.google.com/" target="_blank" rel="noopener">
+                  Open NotebookLM →
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="weeks-grid">
         {(path.weeks || []).map((week, i) => (
           <div key={i} className="week-card">
@@ -116,22 +140,17 @@ export default function LearningPath({ gap, cvText, targetRole, onBack, onReset 
         </div>
       )}
 
-      {path.audioBriefScript && (
-        <div className="audio-brief-block">
-          <div className="audio-brief-header" onClick={() => setShowScript(!showScript)}>
-            <h3>🎙 Audio Brief Script</h3>
-            <span>{showScript ? 'Hide' : 'Show'} — paste into NotebookLM or ElevenLabs</span>
-          </div>
-          {showScript && (
-            <div className="audio-script">
-              <pre>{path.audioBriefScript}</pre>
-              <button className="btn-copy" onClick={() => navigator.clipboard.writeText(path.audioBriefScript)}>
-                Copy Script
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      <div className="academy-cta-block">
+        <p className="academy-cta-label">Ready to build this skill with structured training?</p>
+        <a
+          className="btn-academy-cta"
+          href="https://velocity-academy.pages.dev/#learning-paths"
+          target="_blank"
+          rel="noopener"
+        >
+          Explore Velocity Architecture Academy →
+        </a>
+      </div>
 
       <div className="learning-actions">
         <button className="btn-secondary" onClick={onBack}>← More Gaps</button>

@@ -1,9 +1,18 @@
 import React from 'react'
 import { rankGaps } from '../lib/gap-analyser.js'
 import { getBand } from '../lib/vsf-scorer.js'
+import VsfRadar from './VsfRadar.jsx'
 
 const PRIORITY_COLOURS = { HIGH: '#DC2626', MEDIUM: '#D97706', LOW: '#16A34A' }
 const APPLY_COLOURS = { 'STRONG YES': '#E8630A', 'YES': '#C24F06', 'BORDERLINE': '#D97706', 'NO': '#DC2626' }
+
+const ACADEMY_LINKS = {
+  scaleOfImpact:         { label: 'Enterprise Architecture',      url: 'https://velocity-academy.pages.dev/#learning-paths' },
+  complexityGoverned:    { label: 'Solution Architecture · VAF-SA', url: 'https://velocity-academy.pages.dev/#learning-paths' },
+  authorityHeld:         { label: 'PMO · Program Delivery',       url: 'https://velocity-academy.pages.dev/#learning-paths' },
+  outcomeIntegrity:      { label: 'PMO · Program Delivery',       url: 'https://velocity-academy.pages.dev/#learning-paths' },
+  capabilityTransferred: { label: 'Agentic AI for Architecture',  url: 'https://velocity-academy.pages.dev/#learning-paths' },
+}
 
 function downloadMarkdown(score, rankedGaps) {
   const band = getBand(score.overallScore)
@@ -86,9 +95,12 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
             </a>
           )}
         </div>
-        <div className="score-hero-badge" style={{ color: band.color }}>
-          <span className="score-hero-num">{score.overallScore}</span>
-          <span className="score-hero-band">{band.label}</span>
+        <div className="gap-hero-right">
+          <VsfRadar dimensions={score.dimensions} bandColor={band.color} />
+          <div className="score-hero-badge" style={{ color: band.color }}>
+            <span className="score-hero-num">{score.overallScore}</span>
+            <span className="score-hero-band">{band.label}</span>
+          </div>
         </div>
       </div>
 
@@ -112,6 +124,11 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
                 <div className="dim-bar-fill" style={{ width: `${(dim.score / 10) * 100}%`, background: band.color }}/>
               </div>
               <p className="dim-evidence">{dim.evidence}</p>
+              {ACADEMY_LINKS[key] && (
+                <a className="academy-dim-link" href={ACADEMY_LINKS[key].url} target="_blank" rel="noopener">
+                  Study {ACADEMY_LINKS[key].label} at Academy →
+                </a>
+              )}
             </div>
           )
         })}
@@ -139,6 +156,12 @@ export default function GapAnalysis({ score, cvText, role, onSelectGap, onBack }
                   <span className="weeks-badge">{gap.weeksToBridge}w to bridge</span>
                 </div>
                 <p className="gap-jd-evidence">JD requires: "{gap.jdEvidence}"</p>
+                <p className="gap-academy-hint">
+                  Academy pathway available →{' '}
+                  <a href="https://velocity-academy.pages.dev/#learning-paths" target="_blank" rel="noopener" onClick={e => e.stopPropagation()}>
+                    velocity-academy.pages.dev
+                  </a>
+                </p>
                 <p className="gap-action">→ Generate learning path</p>
               </div>
             ))}
