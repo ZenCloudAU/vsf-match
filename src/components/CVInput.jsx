@@ -47,6 +47,19 @@ const VSF_DIMS = [
   ['Capability Transferred','10%'],
 ]
 
+const SUGGESTED_ROLES = [
+  'Enterprise Architect',
+  'Solution Architect',
+  'Principal Architect',
+  'Cloud Architect',
+  'Data Architect',
+  'Security Architect',
+  'Technical Architect',
+  'Integration Architect',
+  'Domain Architect',
+  'Chief Architect',
+]
+
 export default function CVInput({ cvText, setCvText, role, setRole, region, setRegion, onRun, onRestoreRun, error }) {
   const hasApiKey = import.meta.env.VITE_ANTHROPIC_API_KEY &&
     import.meta.env.VITE_ANTHROPIC_API_KEY !== 'sk-ant-...'
@@ -145,6 +158,14 @@ export default function CVInput({ cvText, setCvText, role, setRole, region, setR
                   title="Save to watchlist"
                 >★</button>
               </div>
+              {!role && (
+                <div className="role-suggestions">
+                  <span className="role-suggest-label">Try:</span>
+                  {SUGGESTED_ROLES.map(r => (
+                    <button key={r} className="role-suggest-chip" onClick={() => setRole(r)}>{r}</button>
+                  ))}
+                </div>
+              )}
               {watchlist.length > 0 && (
                 <div className="watchlist-chips">
                   {watchlist.map(r => (

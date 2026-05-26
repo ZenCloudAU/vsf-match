@@ -28,42 +28,48 @@ function cleanJson(raw) {
   return str
 }
 
-const LEARNING_SYSTEM = `You are a senior career pathway architect for enterprise architects.
-Generate a practical learning path to close a specific skill gap.
-Return ONLY valid JSON. Use short strings — avoid any unescaped quotes, newlines, or special characters inside JSON string values.`
+const LEARNING_SYSTEM = `You are a senior career pathway architect specialising in enterprise and solution architecture careers in the Australian market.
+
+Your task: generate a practical, week-by-week learning plan to close a specific skill gap for a professional targeting a senior architecture role.
+
+Rules:
+- Be specific: name real frameworks, certifications, books, and vendors — not generic advice
+- Calibrate daily commitment realistically (30–90 mins for a working professional)
+- The audioBriefScript must be 180–220 words — a compelling spoken introduction to the topic suitable for audio generation (NotebookLM, ElevenLabs). Write it as natural spoken English, not bullet points.
+- Return ONLY valid JSON. Use escaped strings — no unescaped quotes, raw newlines, or special characters inside JSON values.`
 
 export async function generateLearningPath(gap, cvText, targetRole) {
-  const prompt = `Generate a learning path to close this gap for an enterprise architect targeting: ${targetRole}
+  const prompt = `Generate a learning path to close this gap for a professional targeting: ${targetRole}
 
 GAP: ${gap.skill}
 PRIORITY: ${gap.priority}
-WEEKS TO BRIDGE: ${gap.weeksToBridge}
-JD EVIDENCE: ${gap.jdEvidence}
-CV CONTEXT: ${cvText.substring(0, 800)}
+ESTIMATED WEEKS: ${gap.weeksToBridge}
+JD REQUIRES: ${gap.jdEvidence}
+CV CONTEXT: ${cvText.substring(0, 1000)}
 
 Return JSON in exactly this structure:
 {
   "gap": "Gap name",
   "weeksToBridge": 4,
-  "bridgeStrategy": "One sentence strategy",
+  "bridgeStrategy": "One concrete sentence describing the learning approach",
   "weeks": [
     {
       "week": 1,
-      "focus": "Week theme",
+      "focus": "Specific week theme",
       "dailyCommitment": "45 mins",
       "activities": [
-        { "type": "READ", "title": "Resource title", "duration": "2h" },
-        { "type": "WATCH", "title": "Video title", "duration": "1h" },
-        { "type": "PRACTICE", "title": "Exercise", "duration": "3h" }
+        { "type": "READ",     "title": "Specific book or article title", "duration": "2h" },
+        { "type": "WATCH",    "title": "Specific course or video title",  "duration": "1h" },
+        { "type": "PRACTICE", "title": "Hands-on exercise description",   "duration": "3h" }
       ],
-      "milestone": "What you can do by end of week"
+      "milestone": "Concrete outcome by end of this week"
     }
   ],
-  "cvLanguage": "One sentence to add to CV once skill is acquired",
-  "audioBriefScript": "Short 3 sentence audio brief about this topic"
+  "cvLanguage": "Exact sentence to add to CV once skill is acquired — make it evidence-quality",
+  "audioBriefScript": "180–220 word spoken-English script introducing this topic as a professional development audio brief — natural language, no bullet points, suitable for text-to-speech"
 }`
 
-  const raw = await callClaude(LEARNING_SYSTEM, prompt, 2000)
+  const raw = await callClaude(LEARNING_SYSTEM, prompt, 2500)
 
   try {
     const cleaned = cleanJson(raw)
