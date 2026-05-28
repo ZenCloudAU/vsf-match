@@ -210,8 +210,8 @@ export default function App() {
           <p className="footer-sub">Career Readiness Engine · Velocity Success Factor™ framework · Part of the Velocity Architecture Academy ecosystem.</p>
           <div className="footer-links">
             <a href="/vsf-match/">VSF Framework Home</a>
-            <a href="https://zencloudau.github.io/velocity-architecture/" target="_blank" rel="noopener">Velocity Architecture Framework</a>
-            <a href="https://zencloudau.github.io/velocity-academy/" target="_blank" rel="noopener">Velocity Architecture Academy</a>
+            <a href="https://velocityarchitectureframework.com/" target="_blank" rel="noopener">Velocity Architecture Framework</a>
+            <a href="https://velocityarchitecture.com.au/" target="_blank" rel="noopener">Velocity Architecture Academy</a>
             <a href="https://zencloudau.github.io/vaf-sa/" target="_blank" rel="noopener">VAF-SA</a>
             <a href="https://github.com/ZenCloudAU/vsf-match" target="_blank" rel="noopener">VSF Match GitHub</a>
             <a href="https://www.zencloud.com.au/" target="_blank" rel="noopener">ZenCloud</a>
