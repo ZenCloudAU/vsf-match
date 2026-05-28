@@ -51,6 +51,31 @@
 
   --transition: 200ms cubic-bezier(0.16, 1, 0.3, 1);
   --content: 1120px;
+
+  /* VAF master design system tokens */
+  --vaf-bg:             var(--color-bg);
+  --vaf-surface:        var(--color-surface);
+  --vaf-surface-raised: var(--color-surface-2);
+  --vaf-border:         var(--color-border-strong);
+  --vaf-border-strong:  var(--color-surface-3);
+  --vaf-text:           var(--color-text);
+  --vaf-text-2:         var(--color-text-muted);
+  --vaf-text-3:         var(--color-text-faint);
+  --vaf-accent:         var(--color-primary);
+  --vaf-accent-hover:   var(--color-primary-hover);
+  --vaf-accent-subtle:  var(--color-primary-dim);
+  --vaf-accent-border:  var(--color-primary-glow);
+  --vaf-navy:           #1E3A5F;
+  --vaf-navy-dark:      #162D4A;
+  --vaf-font-heading:   'Playfair Display', Georgia, serif;
+  --vaf-font-body:      var(--font-body);
+  --vaf-font-mono:      var(--font-mono);
+  --vaf-radius-sm:      var(--radius-sm);
+  --vaf-radius-md:      var(--radius-md);
+  --vaf-radius-lg:      var(--radius-lg);
+  --vaf-shadow:         var(--shadow-card);
+  --vaf-shadow-md:      var(--shadow-raised);
+  --vaf-transition:     var(--transition);
 }
 
 /* ============================================================
