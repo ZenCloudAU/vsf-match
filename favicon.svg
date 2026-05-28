@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="VSF Match">
+  <rect width="64" height="64" rx="14" fill="#0F172A"/>
+  <path d="M14 40l10-16 10 11 9-17 7 10" fill="none" stroke="#E8630A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="50" cy="28" r="5" fill="#F8FAFC"/>
+  <text x="32" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#F8FAFC">VSF</text>
+</svg>
