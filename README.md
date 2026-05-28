@@ -1,6 +1,6 @@
 # VSF Match — Velocity Success Factor™ Career Readiness Engine
 
-**ZenCloud Global Consultants · Brisbane**
+**A StudioSix / Velocity learning-support product within the ZenCloud Advisory ecosystem.**
 
 > *Stop applying blind. Know exactly where you stand — and what to do about it.*
 
@@ -8,7 +8,9 @@
 
 ## What This Does
 
-VSF Match is a weekly career readiness engine for senior enterprise architects and solution architects.
+VSF Match is a career readiness engine for senior enterprise architects and solution architects.
+
+It supports the wider Velocity Architecture Academy learning pathway by helping practitioners compare their current experience against target roles, identify capability gaps, and route those gaps into focused learning.
 
 Every Monday:
 1. Paste your CV
@@ -20,6 +22,25 @@ Every Monday:
 - Gap analysis with evidence
 - Prioritised learning path per gap
 - Audio brief script (paste into NotebookLM or ElevenLabs)
+
+---
+
+## Ecosystem Role
+
+```text
+ZenCloud advises.
+StudioSix produces.
+Velocity decides.
+```
+
+Within that model:
+
+- **ZenCloud Advisory** is the commercial advisory front door.
+- **StudioSix** is the product and delivery studio.
+- **Velocity Architecture Academy** is the learning pathway.
+- **VSF Match** is a capability-readiness tool that helps practitioners understand gaps and choose learning actions.
+
+VSF Match is not a recruitment agency, employment guarantee, or certification authority.
 
 ---
 
@@ -68,7 +89,7 @@ vsf-match/
 
 ### 1. Get API Keys
 
-**Anthropic (Claude):** https://console.anthropic.com → API Keys → Create Key
+**Anthropic (Claude):** https://console.anthropic.com → API Keys → Create Key  
 **Jooble:** https://jooble.org/api/about → Register → Copy key
 
 ### 2. Install
@@ -99,27 +120,9 @@ npm run dev
 
 | Phase | Feature | Status |
 |---|---|---|
-| 1 | CV intake + Jooble live jobs + VSF match scoring | 🔨 Building |
-| 2 | Gap analysis with evidence and ranking | ⏳ Planned |
-| 3 | Personalised learning path per gap | ⏳ Planned |
-| 4 | Audio brief script generation | ⏳ Planned |
-| 5 | Week-on-week progress dashboard | ⏳ Planned |
-| 6 | Recruiter mode — score any candidate against any JD | ⏳ Planned |
-
----
-
-## Built On
-
-- Velocity Success Factor™ framework — ZenCloud Global Consultants
-- Claude (Anthropic) for CV analysis and gap intelligence
-- Jooble API for live job data across 67 countries
-- React + Vite
-
----
-
-## Licence
-
-© ZenCloud Global Consultants. All rights reserved.
-Velocity Success Factor™ is a ZenCloud product.
-
-*ZenCloud Global Consultants · velocityarchitectureframework.com*
+| 1 | Manual CV + target role input | Planned |
+| 2 | Live job retrieval | Planned |
+| 3 | VSF scoring | Planned |
+| 4 | Gap analysis | Planned |
+| 5 | Learning path generation | Planned |
+| 6 | Audio brief script | Planned |
